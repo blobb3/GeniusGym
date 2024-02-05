@@ -1,21 +1,28 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Timerecord</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Timerecord</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    </ion-content>
+    <ion-tabs>
+      <ion-router-outlet></ion-router-outlet>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="todo" href="/tabs/todo">
+          <ion-icon :icon="accessibility"></ion-icon>
+          <ion-label>You</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="projects" href="/tabs/projects">
+          <ion-icon :icon="barbell" />
+          <ion-label>Training</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="timerecord" href="/tabs/timerecord">
+          <ion-icon :icon="calendar" />
+          <ion-label>Historie</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
+import { accessibility, barbell, calendar } from 'ionicons/icons';
 </script>
