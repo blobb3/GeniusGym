@@ -8,8 +8,8 @@
           <ion-label>You</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="projects" href="/tabs/projects">
-          <ion-icon :icon="barbell" />
+        <ion-tab-button tab="trainingseinheiten" href="/tabs/trainingseinheiten">
+          <ion-icon :icon="barbell"></ion-icon>
           <ion-label>Training</ion-label>
         </ion-tab-button>
 

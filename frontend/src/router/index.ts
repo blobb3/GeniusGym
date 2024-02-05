@@ -36,6 +36,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'status',
         component: () => import('@/views/Status.vue'),
       },
+      {
+        path: 'trainingseinheiten',
+        component: () => import('@/views/Trainingseinheiten.vue'),
+      },
     ]
   }
 ]
