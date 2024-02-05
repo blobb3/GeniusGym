@@ -2,13 +2,13 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Timerecord</ion-title>
+        <ion-title>Dashboard</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Timerecord</ion-title>
+          <ion-title size="large">Dashboard</ion-title>
         </ion-toolbar>
       </ion-header>
     </ion-content>

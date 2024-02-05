@@ -14,7 +14,7 @@
             <ion-card @click="navigateToUnterkoerper" color="secondary">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
-            <ion-card color="tertiary">
+            <ion-card @click="navigateToRunningMap" color="tertiary">
                 <ion-card-content>Running</ion-card-content>
             </ion-card>
 
@@ -47,6 +47,10 @@ const navigateToOberkoerper = () => {
 // Funktion zum Navigieren zur Unterkoerper.vue-Seite
 const navigateToUnterkoerper = () => {
     router.push('/tabs/unterkoerper');
+};
+// Funktion zum Navigieren zur RunningMap.vue-Seite
+const navigateToRunningMap = () => {
+    router.push('/tabs/runningmap');
 };
 </script>
 

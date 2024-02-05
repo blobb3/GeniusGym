@@ -18,9 +18,9 @@
           <ion-label>Status</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="timerecord" href="/tabs/timerecord">
+        <ion-tab-button tab="dashboard" href="/tabs/dashboard">
           <ion-icon :icon="calendar" />
-          <ion-label>Historie</ion-label>
+          <ion-label>Dasbhoard</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>

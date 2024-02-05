@@ -29,8 +29,8 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Projects.vue')
       },
       {
-        path: 'timerecord',
-        component: () => import('@/views/Timerecord.vue')
+        path: 'dashboard',
+        component: () => import('@/views/Dashboard.vue')
       },
       {
         path: 'status',
@@ -47,7 +47,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'unterkoerper',
         component: () => import('@/views/Unterkoerper.vue'),
-      }, 
+      },
+      {
+        path: 'runningmap',
+        component: () => import('@/views/RunningMap.vue'),
+      },      
     ]
   }
 ]
