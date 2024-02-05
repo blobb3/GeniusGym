@@ -40,6 +40,14 @@ const routes: Array<RouteRecordRaw> = [
         path: 'trainingseinheiten',
         component: () => import('@/views/Trainingseinheiten.vue'),
       },
+      {
+        path: 'oberkoerper',
+        component: () => import('@/views/Oberkoerper.vue'),
+      },
+      {
+        path: 'unterkoerper',
+        component: () => import('@/views/Unterkoerper.vue'),
+      }, 
     ]
   }
 ]

@@ -8,10 +8,10 @@
         </ion-header>
         <ion-content :fullscreen="true">
             <!-- Farbige Container für die Trainingseinheiten -->
-            <ion-card color="primary">
+            <ion-card @click="navigateToOberkoerper" color="primary">
                 <ion-card-content>Oberkörpertraining</ion-card-content>
             </ion-card>
-            <ion-card color="secondary">
+            <ion-card @click="navigateToUnterkoerper" color="secondary">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
             <ion-card color="tertiary">
@@ -35,14 +35,24 @@ import {
     IonCardContent,
     IonButton,
 } from '@ionic/vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
+// Funktion zum Navigieren zur Oberkoerper.vue-Seite
+const navigateToOberkoerper = () => {
+    router.push('/tabs/oberkoerper');
+};
+
+// Funktion zum Navigieren zur Unterkoerper.vue-Seite
+const navigateToUnterkoerper = () => {
+    router.push('/tabs/unterkoerper');
+};
 </script>
 
 <style>
-.button-container, p {
+.button-container,
+p {
     padding: 20px;
-    /* Fügt etwas Abstand um den Button herum hinzu */
 }
 </style>
-  
