@@ -30,14 +30,15 @@
                 </ion-accordion>
 
                 <ion-accordion value="third">
-  <ion-item slot="header" color="light">
-    <ion-label>Schulterdrücken</ion-label>
-  </ion-item>
-  <div class="ion-padding" slot="content">
-    <img src="https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif" style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
-    Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.
-  </div>
-</ion-accordion>
+                    <ion-item slot="header" color="light">
+                        <ion-label>Schulterdrücken</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                        <img src="https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif"
+                            style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
+                        Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.
+                    </div>
+                </ion-accordion>
 
             </ion-accordion-group>
         </ion-content>
