@@ -13,6 +13,11 @@
           <ion-label>Training</ion-label>
         </ion-tab-button>
 
+        <ion-tab-button tab="status" href="/tabs/status">
+          <ion-icon :icon="home" />
+          <ion-label>Status</ion-label>
+        </ion-tab-button>
+
         <ion-tab-button tab="timerecord" href="/tabs/timerecord">
           <ion-icon :icon="calendar" />
           <ion-label>Historie</ion-label>
@@ -24,5 +29,5 @@
 
 <script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { accessibility, barbell, calendar } from 'ionicons/icons';
+import { accessibility, barbell, calendar, home } from 'ionicons/icons';
 </script>

@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title><h3 class="ion-text-center">Zeit, deine Grenzen zu sprengen!</h3></ion-title>
+        <ion-title><h3 class="ion-text-center">Galactic Gains: Train Like a Jedi!</h3></ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">

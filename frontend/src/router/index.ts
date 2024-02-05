@@ -31,7 +31,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'timerecord',
         component: () => import('@/views/Timerecord.vue')
-      }
+      },
+      {
+        path: 'status',
+        component: () => import('@/views/Status.vue'),
+      },
     ]
   }
 ]
