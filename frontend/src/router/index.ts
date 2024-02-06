@@ -51,7 +51,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'runningmap',
         component: () => import('@/views/RunningMap.vue'),
-      },      
+      }, 
     ]
   }
 ]

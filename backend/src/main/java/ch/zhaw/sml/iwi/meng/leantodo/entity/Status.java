@@ -26,6 +26,14 @@ public class Status {
 
     private String owner;
 
+    private String name;
+
+    private Long level;
+
+    private Long points;
+
+    private Long pointsToNextLevel;
+
     @OneToMany
     private List<ToDo> toDos = new ArrayList<>();
     

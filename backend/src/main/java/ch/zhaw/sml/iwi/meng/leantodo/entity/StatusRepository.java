@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface StatusRepository extends JpaRepository<Project, Long>
 {
     public List<Project> findByOwner(String owner);
+
+    public void save(Status status);
 }
