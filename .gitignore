@@ -46,3 +46,6 @@ Thumbs.db
 frontend/UserInterfaceState.xcuserstate
 .vscode
 
+# Umgebungsvariablen ignorieren
+.env.local
+.env.*
