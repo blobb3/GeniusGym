@@ -3,9 +3,12 @@
         <ion-header>
             <ion-toolbar>
                 <ion-title>Oberkörpertraining</ion-title>
+                <ion-buttons slot="start">
+                    <ion-back-button defaultHref="/"></ion-back-button>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
-        <ion-content :fullscreen="true">
+        <ion-content class="ion-padding" :fullscreen="true">
             <ion-accordion-group :multiple="true">
                 <ion-accordion value="first">
                     <ion-item slot="header" color="light">
@@ -56,12 +59,15 @@ import {
     IonAccordion,
     IonItem,
     IonLabel,
+    IonButtons,
+    IonBackButton,
 } from '@ionic/vue';
+
 </script>
 
-<style>
+<style scoped>
 .ion-padding {
-    color: black;
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
 }
 </style>
   

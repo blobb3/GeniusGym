@@ -31,8 +31,8 @@
     </ion-content>
   </ion-page>
 </template>
-
-<script setup lang="ts">
+<!--Icons funktionieren, nur wenn setup in script steht-->
+<script setup lang="ts"> 
 import {
   IonPage,
   IonHeader,
@@ -51,7 +51,7 @@ import { useLogin } from "../composables/useLogin";
 const { username, password, login } = useLogin();
 </script>
 
-<style>
+<style scoped>
 .container {
   height: 100%;
   display: flex;

@@ -2,14 +2,19 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Wähle deine Joggingstrecke</ion-title>
+        <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-button expand="block" @click="generateRoute">Generiere eine Strecke in deiner Nähe</ion-button>
 
+      <!-- Hier könnte ein Bild einer Karte eingefügt werden -->
       <div class="map-container">
-        <div id="map" style="height: 350px; width: 100%;"></div>
+        <img src="https://www.raonline.ch/images/hike/pic7/swisstopo_karten18005.jpg"
+          style="max-width: 684px; height: 351px; margin: 0px; width: 437px;">
       </div>
 
       <div class="timer-buttons">
@@ -34,6 +39,8 @@ import {
   IonTitle,
   IonContent,
   IonButton,
+  IonButtons,
+  IonBackButton,
 } from '@ionic/vue';
 
 
@@ -132,6 +139,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.ion-padding {
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
 }
 </style>
   
