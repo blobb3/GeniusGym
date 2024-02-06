@@ -1,40 +1,46 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true" class="ion-padding">
-            <ion-button expand="block" @click="generateRoute">Generiere eine Strecke in deiner Nähe</ion-button>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content :fullscreen="true" class="ion-padding">
+      <ion-button expand="block" @click="generateRoute">Generiere eine Strecke in deiner Nähe</ion-button>
 
-            <!-- Hier könnte ein Bild einer Karte eingefügt werden -->
-            <div class="map-container">
-                <img src="https://www.raonline.ch/images/hike/pic7/swisstopo_karten18005.jpg" style="max-width: 684px; height: 351px; margin: 0px; width: 437px;">
-            </div>
+      <!-- Hier könnte ein Bild einer Karte eingefügt werden -->
+      <div class="map-container">
+        <img src="https://www.raonline.ch/images/hike/pic7/swisstopo_karten18005.jpg"
+          style="max-width: 684px; height: 351px; margin: 0px; width: 437px;">
+      </div>
 
-            <div class="timer-buttons">
-                <ion-button @click="startTimer">Start</ion-button>
-                <ion-button @click="stopTimer">Ziel</ion-button>
-                <ion-button @click="resetTimer">Reset</ion-button>
-            </div>
+      <div class="timer-buttons">
+        <ion-button @click="startTimer">Start</ion-button>
+        <ion-button @click="stopTimer">Ziel</ion-button>
+        <ion-button @click="resetTimer">Reset</ion-button>
+      </div>
 
-            <!-- Stoppuhr Anzeige -->
-            <div class="timer-display">
-                Zeit: {{ elapsedTime }}
-            </div>
-        </ion-content>
-    </ion-page>
+      <!-- Stoppuhr Anzeige -->
+      <div class="timer-display">
+        Zeit: {{ elapsedTime }}
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonButton,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButton,
+  IonButtons,
+  IonBackButton,
 } from '@ionic/vue';
 
 // Verwenden refs für den Startzeitpunkt, die verstrichene Zeit und das Intervall
@@ -84,20 +90,20 @@ const resetTimer = () => {
   
 <style scoped>
 .map-container img {
-    width: 100%;
-    margin: 16px 0;
+  width: 100%;
+  margin: 16px 0;
 }
 
 .timer-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 16px 0;
+  display: flex;
+  justify-content: space-around;
+  margin: 16px 0;
 }
 
 .timer-display {
-    text-align: center;
-    margin-top: 16px;
-    color: black;
+  text-align: center;
+  margin-top: 16px;
+  color: black;
 }
 
 .ion-padding {
@@ -107,6 +113,5 @@ const resetTimer = () => {
   align-items: center;
   text-align: center;
 }
-
 </style>
   
