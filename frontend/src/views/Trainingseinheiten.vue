@@ -23,6 +23,8 @@
             <ion-button size="small">Training abschliessen</ion-button>
         </ion-content>
     </ion-page>
+    <!--<ion-card-content>Oberkörpertraining - Punkte: {{ globalState.oberkoerperPunkte }}</ion-card-content>
+    <ion-card-content>Unterkörpertraining - Punkte: {{ globalState.unterkoerperPunkte }}</ion-card-content>-->
 </template>
   
 <script setup lang="ts">
@@ -37,6 +39,10 @@ import {
     IonButton,
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
+
+//für punktzahl von untertrainingseinheiten
+import { inject } from 'vue';
+const globalState = inject('globalState');
 
 const router = useRouter()
 

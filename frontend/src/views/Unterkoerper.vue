@@ -49,12 +49,12 @@ interface Exercise {
 // Initialisiere die Übungen mit dem Status 'completed' als false
 const exercises = ref<Exercise[]>([
     { id: 'squat', name: 'Kniebeugen', description: 'Stärkt Beine und Gesäß. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kniebeugen_muskeln-breite_kniebeugen_langhantel.gif', completed: false },
-    { id: 'lunges', name: 'Ausfallschritte', description: 'Trainiert Beine und Gesäß. Fördert die Stabilität. 3 Sätze von 10-12 Wiederholungen pro Bein.', completed: false },
-    { id: 'deadlifts', name: 'Kreuzheben', description: 'Stärkt die hintere Beinmuskulatur und den unteren Rücken. 3 Sätze von 8-10 Wiederholungen.', completed: false },
-    { id: 'legpress', name: 'Beinpresse', description: 'Zielt auf Oberschenkel und Gesäßmuskulatur. 3 Sätze von 10-15 Wiederholungen.', completed: false },
-    { id: 'calfRaises', name: 'Wadenheben', description: 'Isoliertes Training der Waden. 3 Sätze von 15-20 Wiederholungen.', completed: false },
-    { id: 'hamstringCurls', name: 'Bein-Curls', description: 'Kräftigt die Beinrückseite. 3 Sätze von 10-15 Wiederholungen.', completed: false },
-    { id: 'stepUps', name: 'Step-Ups', description: 'Verbessert Kraft und Balance. 3 Sätze von 10 Wiederholungen pro Bein.', completed: false },
+    { id: 'lunges', name: 'Ausfallschritte', description: 'Trainiert Beine und Gesäß. Fördert die Stabilität. 3 Sätze von 10-12 Wiederholungen pro Bein.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2017/11/kurzhantel_ausfallschritte_nach_hinten.gif',completed: false },
+    { id: 'deadlifts', name: 'Kreuzheben', description: 'Stärkt die hintere Beinmuskulatur und den unteren Rücken. 3 Sätze von 8-10 Wiederholungen.', imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kreuzheben_muskelgruppen-kreuzheben_mit_langhantel.gif', completed: false },
+    { id: 'legpress', name: 'Beinpresse', description: 'Zielt auf Oberschenkel und Gesäßmuskulatur. 3 Sätze von 10-15 Wiederholungen.', imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beinpresse_muskeln-45_grad_beinpresse.gif' ,completed: false },
+    { id: 'calfRaises', name: 'Wadenheben', description: 'Isoliertes Training der Waden. 3 Sätze von 15-20 Wiederholungen.', imageUrl: 'https://modusx.de/wp-content/uploads/wadenheben-stehend-mit-eigenem-koerpergewicht.gif', completed: false },
+    { id: 'hamstringCurls', name: 'Bein-Curls', description: 'Kräftigt die Beinrückseite. 3 Sätze von 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beincurls_liegend.gif',completed: false },
+    { id: 'stepUps', name: 'Step-Ups', description: 'Verbessert Kraft und Balance. 3 Sätze von 10 Wiederholungen pro Bein.', imageUrl: 'https://modusx.de/wp-content/uploads/side-step-ups.gif',completed: false },
 ]);
 
 const collectedPoints = ref(0);
@@ -66,6 +66,24 @@ const completeExercise = (index: number) => {
         exercises.value[index].completed = true;
     }
 }
+
+/*
+const globalState = inject('globalState');
+
+const completeExercise = (index: number) => {
+  if (!exercises.value[index].completed) {
+    const pointsToAdd = 5;
+    collectedPoints.value += pointsToAdd;
+    exercises.value[index].completed = true;
+    // Hier aktualisieren Sie den globalen Zustand je nach Komponente
+    if () {
+        globalState.oberkoerperPunkte += pointsToAdd;
+    } else {
+      globalState.unterkoerperPunkte += pointsToAdd;
+    }
+  }
+};
+*/
 </script>
 
 <style scoped>
