@@ -65,5 +65,9 @@ import {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.ion-padding {
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+}
+</style>
   

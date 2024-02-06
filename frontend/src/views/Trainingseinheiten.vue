@@ -38,7 +38,7 @@ import {
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter();
+const router = useRouter()
 
 // Funktion zum Navigieren zur Oberkoerper.vue-Seite
 const navigateToOberkoerper = () => {
@@ -59,5 +59,8 @@ const navigateToRunningMap = () => {
 .button-container,
 p {
     padding: 20px;
+}
+.ion-padding {
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
 }
 </style>

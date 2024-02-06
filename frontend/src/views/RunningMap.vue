@@ -113,5 +113,8 @@ const resetTimer = () => {
   align-items: center;
   text-align: center;
 }
+.ion-padding {
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+}
 </style>
   
