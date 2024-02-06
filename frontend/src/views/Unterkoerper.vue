@@ -1,10 +1,13 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title class="ion-padding">Unterkörpertraining</ion-title>
-            </ion-toolbar>
-        </ion-header >
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="ion-padding">Unterkörpertraining</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
             <ion-accordion-group :multiple="true">
                 <!-- Übung 1 -->
@@ -89,12 +92,11 @@ import {
     IonAccordion,
     IonItem,
     IonLabel,
+    IonButtons,
+    IonBackButton,
 } from '@ionic/vue';
 </script>
   
 <style scoped>
-.ion-padding {
-    color: black;
-}
 </style>
   

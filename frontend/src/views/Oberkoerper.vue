@@ -2,7 +2,10 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title class="ion-padding">Oberkörpertraining</ion-title>
+                <ion-title>Oberkörpertraining</ion-title>
+                <ion-buttons slot="start">
+                    <ion-back-button defaultHref="/"></ion-back-button>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
@@ -56,10 +59,11 @@ import {
     IonAccordion,
     IonItem,
     IonLabel,
+    IonButtons,
+    IonBackButton,
 } from '@ionic/vue';
+
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
   

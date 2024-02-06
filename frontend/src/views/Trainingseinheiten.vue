@@ -14,6 +14,7 @@
             <ion-card @click="navigateToUnterkoerper" color="secondary">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
+            <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
             <ion-card @click="navigateToRunningMap" color="tertiary">
                 <ion-card-content>Running</ion-card-content>
             </ion-card>
