@@ -20,7 +20,7 @@
             </ion-card>
 
             <!-- Button 'Für heute Fertig' -->
-            <ion-button class="ion-padding" size="small">Training abschliessen</ion-button>
+            <ion-button size="small">Training abschliessen</ion-button>
         </ion-content>
     </ion-page>
 </template>
