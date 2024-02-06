@@ -60,8 +60,6 @@ import {
 </script>
 
 <style scoped>
-.ion-padding {
-    color: black;
-}
+
 </style>
   
