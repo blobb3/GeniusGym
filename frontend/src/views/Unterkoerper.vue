@@ -2,10 +2,10 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Unterkörpertraining</ion-title>
+                <ion-title class="ion-padding">Unterkörpertraining</ion-title>
             </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
+        </ion-header >
+        <ion-content class="ion-padding" :fullscreen="true">
             <ion-accordion-group :multiple="true">
                 <!-- Übung 1 -->
                 <ion-accordion value="first">

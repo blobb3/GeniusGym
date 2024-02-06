@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Wähle deine Joggingstrecke</ion-title>
+                <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true" class="ion-padding">

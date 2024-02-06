@@ -2,10 +2,10 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Oberkörpertraining</ion-title>
+                <ion-title class="ion-padding">Oberkörpertraining</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content :fullscreen="true">
+        <ion-content class="ion-padding" :fullscreen="true">
             <ion-accordion-group :multiple="true">
                 <ion-accordion value="first">
                     <ion-item slot="header" color="light">

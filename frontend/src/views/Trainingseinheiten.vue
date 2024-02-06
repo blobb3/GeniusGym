@@ -1,12 +1,12 @@
 <template>
-    <ion-page>
-        <ion-header>
+    <ion-page class="ion-padding">
+        <ion-header >
             <ion-toolbar>
-                <ion-title>Trainingseinheiten</ion-title>
+                <ion-title class="ion-padding">Trainingseinheiten</ion-title>
                 <p>Zähle die Tage, nicht die Sterne – Training führt zur Meisterschaft.</p>
             </ion-toolbar>
         </ion-header>
-        <ion-content :fullscreen="true">
+        <ion-content class="ion-padding" :fullscreen="true">
             <!-- Farbige Container für die Trainingseinheiten -->
             <ion-card @click="navigateToOberkoerper" color="primary">
                 <ion-card-content>Oberkörpertraining</ion-card-content>
@@ -19,7 +19,7 @@
             </ion-card>
 
             <!-- Button 'Für heute Fertig' -->
-            <ion-button size="small">Training abschliessen</ion-button>
+            <ion-button class="ion-padding" size="small">Training abschliessen</ion-button>
         </ion-content>
     </ion-page>
 </template>

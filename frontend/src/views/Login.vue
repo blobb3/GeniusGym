@@ -31,8 +31,8 @@
     </ion-content>
   </ion-page>
 </template>
-
-<script setup lang="ts">
+<!--Icons funktionieren, nur wenn setup in script steht-->
+<script setup lang="ts"> 
 import {
   IonPage,
   IonHeader,
