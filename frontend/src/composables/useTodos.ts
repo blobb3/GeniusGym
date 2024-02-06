@@ -2,6 +2,7 @@ import { getAllToDos, updateToDo, addNewToDo } from '@/api/todos';
 import { ToDo } from '@/model/todo';
 import { onMounted, ref } from 'vue';
 
+// Ist die Funktion fürs hinzufügen, abrufen, aktualisieren und archivieren
 export function useTodos() {
 
     const todos = ref<ToDo[]>([]);

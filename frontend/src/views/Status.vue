@@ -17,6 +17,7 @@
           <ion-input type="number" v-model="userData.gewicht"></ion-input>
         </ion-item>
         <ion-button @click="submitUserData" class="testbutton">Daten speichern</ion-button>
+        <br>
       </div>
       <!-- Anzeige der Nutzerdaten, Grösse und Gewicht -->
       <div class="container">
@@ -66,32 +67,55 @@ import {
   IonList,
   IonItem,
 } from "@ionic/vue";
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import { person } from 'ionicons/icons';
+import { useStatus } from "@/composables/useStatus";
 
 // Definiert das Datenobjekt für die Benutzerdaten
 interface UserData {
-  groesse?: string;
-  gewicht?: string;
-  name: string; // ? == Optional, falls nicht immer gesetzt
+  groesse?: number;
+  gewicht?: number;
+  name?: string; // Optional
   level?: number; 
   points?: number; 
   pointsToNextLevel?: number; 
 }
 
+
 // Initialisierung der userData mit reaktiven Properties für die Inputfelder
 const userData = ref<UserData>({
-  groesse: '',
-  gewicht: '',
-  name: '',
+name: ""
 });
 
+
+
+const { status, getStatusData, updateStatusData, addNewStatus } = useStatus();
+
+onMounted(async () => {
+  await getStatusData(); // Holt den aktuellen Status beim Laden
+  if (status.value) {
+    userData.value = status.value; // Aktualisiert userData mit den geholten Daten
+  }
+});
 // Methode zum Senden der Nutzerdaten und Hinzufügen zur Liste
 const submitUserData = async () => {
   try {
-    await axios.post('http://localhost:8080/status', userData.value);
-    // userData.value = { groesse: '', gewicht: '' };
+    // Konvertieren Sie userData.value zu dem erwarteten Typ, falls erforderlich
+    const payload = {
+      ...userData.value,
+      groesse: Number(userData.value.groesse),
+      gewicht: Number(userData.value.gewicht),
+    };
+
+    // Entscheiden Sie, ob Sie den Status aktualisieren oder einen neuen hinzufügen
+    if (status.value && status.value.id) {
+      await updateStatusData({ ...status.value, ...payload });
+    } else {
+      await addNewStatus(payload);
+    }
+
+    await getStatusData(); // Aktualisiert den lokalen Status nach dem Senden
   } catch (error) {
     console.error('Fehler beim Senden der Nutzerdaten:', error);
   }
@@ -120,4 +144,5 @@ const submitUserData = async () => {
 .testbutton {
   text-transform: none;
 }
+
 </style>
