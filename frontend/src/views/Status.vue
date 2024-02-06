@@ -16,9 +16,9 @@
           <ion-label position="floating">Gewicht (kg)</ion-label>
           <ion-input type="number" v-model="userData.gewicht"></ion-input>
         </ion-item>
-        <ion-button @click="submitUserData">Daten speichern</ion-button>
+        <ion-button @click="submitUserData" class="testbutton">Daten speichern</ion-button>
       </div>
-      <!-- Anzeige der Nutzerdaten, Größe und Gewicht -->
+      <!-- Anzeige der Nutzerdaten, Grösse und Gewicht -->
       <div class="container">
         <ion-card class="user-status-card">
           <ion-card-header>
@@ -54,17 +54,30 @@
 </template>
 
 <script setup lang="ts">
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonInput,
+  IonButton,
+  IonLabel,
+  IonList,
+  IonItem,
+} from "@ionic/vue";
 import { ref } from 'vue';
 import axios from 'axios';
 import { person } from 'ionicons/icons';
 
+// Definiert das Datenobjekt für die Benutzerdaten
 interface UserData {
   groesse?: string;
   gewicht?: string;
-  name: string; // Optional, falls nicht immer gesetzt
-  level?: number; // Optional, falls nicht immer gesetzt
-  points?: number; // Optional, falls nicht immer gesetzt
-  pointsToNextLevel?: number; // Optional, falls nicht immer gesetzt
+  name: string; // ? == Optional, falls nicht immer gesetzt
+  level?: number; 
+  points?: number; 
+  pointsToNextLevel?: number; 
 }
 
 // Initialisierung der userData mit reaktiven Properties für die Inputfelder
@@ -78,7 +91,6 @@ const userData = ref<UserData>({
 const submitUserData = async () => {
   try {
     await axios.post('http://localhost:8080/status', userData.value);
-    // Optional: Benutzerdaten im Frontend zurücksetzen, falls gewünscht
     // userData.value = { groesse: '', gewicht: '' };
   } catch (error) {
     console.error('Fehler beim Senden der Nutzerdaten:', error);
@@ -103,5 +115,9 @@ const submitUserData = async () => {
 
 .card-title, .progress-text {
   color: #000000;
+}
+
+.testbutton {
+  text-transform: none;
 }
 </style>

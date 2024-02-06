@@ -10,5 +10,6 @@ public interface StatusRepository extends JpaRepository<Project, Long>
 {
     public List<Project> findByOwner(String owner);
 
+    // soll Status Objekt in DB speihern
     public void save(Status status);
 }

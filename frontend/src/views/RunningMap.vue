@@ -28,6 +28,7 @@
       </div>
     </ion-content>
   </ion-page>
+ 
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -41,6 +42,7 @@ import {
   IonButtons,
   IonBackButton,
 } from '@ionic/vue';
+
 
 
 // Verwenden refs für den Startzeitpunkt, die verstrichene Zeit und das Intervall
@@ -111,6 +113,8 @@ onMounted(() => {
   script.defer = true;
   document.head.appendChild(script);
 });
+
+
 </script>
 
   
