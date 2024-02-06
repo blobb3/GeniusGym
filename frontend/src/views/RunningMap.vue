@@ -13,8 +13,7 @@
 
       <!-- Hier könnte ein Bild einer Karte eingefügt werden -->
       <div class="map-container">
-        <img src="https://www.raonline.ch/images/hike/pic7/swisstopo_karten18005.jpg"
-          style="max-width: 684px; height: 351px; margin: 0px; width: 437px;">
+        <div id="map" style="height: 350px; width: 100%;"></div>
       </div>
 
       <div class="timer-buttons">
@@ -92,7 +91,7 @@ declare global {
   interface Window { initMap: () => void; }
 }
 
-window.initMap = function() {
+window.initMap = function () {
   const mapElement = document.getElementById('map');
   if (mapElement) { // Überprüfe, ob mapElement nicht null ist
     const map = new google.maps.Map(mapElement as HTMLElement, {
@@ -140,8 +139,10 @@ onMounted(() => {
   align-items: center;
   text-align: center;
 }
+
 .ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+  --background: #fff;
+  /* Setzt die Hintergrundfarbe auf Weiß */
 }
 </style>
   
