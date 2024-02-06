@@ -54,7 +54,7 @@ const navigateToRunningMap = () => {
 };
 </script>
 
-<style>
+<style scoped>
 .button-container,
 p {
     padding: 20px;

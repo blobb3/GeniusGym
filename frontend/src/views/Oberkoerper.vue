@@ -59,7 +59,7 @@ import {
 } from '@ionic/vue';
 </script>
 
-<style>
+<style scoped>
 .ion-padding {
     color: black;
 }

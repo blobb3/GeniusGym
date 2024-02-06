@@ -51,7 +51,7 @@ import { useLogin } from "../composables/useLogin";
 const { username, password, login } = useLogin();
 </script>
 
-<style>
+<style scoped>
 .container {
   height: 100%;
   display: flex;
