@@ -3,15 +3,12 @@ package ch.zhaw.sml.iwi.meng.leantodo.security;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import ch.zhaw.sml.iwi.meng.leantodo.entity.User;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.UserRepository;
+import ch.zhaw.sml.iwi.meng.leantodo.repositories.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -30,7 +27,9 @@ public class TokenGenerator {
     public UserAuthResponse generateJWT(String username) {
 
         UserAuthResponse userAuthResponse = new UserAuthResponse();
-
+        if(username == null) {
+            return null;
+        }
         User user = userRepository.findById(username).get();
         if (user == null) {
             return null;

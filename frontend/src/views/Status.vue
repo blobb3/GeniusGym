@@ -9,7 +9,7 @@
       <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
       <div class="input-container">
         <ion-item>
-          <ion-label position="floating">Größe (cm)</ion-label>
+          <ion-label position="floating">Grösse (cm)</ion-label>
           <ion-input type="number" v-model="userData.groesse"></ion-input>
         </ion-item>
         <ion-item>
@@ -40,7 +40,7 @@
                 <ion-label>Punkte: {{ userData.points }}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>Größe: {{ userData.groesse }} cm</ion-label>
+                <ion-label>Grösse: {{ userData.groesse }} cm</ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
@@ -98,28 +98,31 @@ onMounted(async () => {
     userData.value = status.value; // Aktualisiert userData mit den geholten Daten
   }
 });
+
+
 // Methode zum Senden der Nutzerdaten und Hinzufügen zur Liste
 const submitUserData = async () => {
   try {
-    // Konvertieren Sie userData.value zu dem erwarteten Typ, falls erforderlich
-    const payload = {
-      ...userData.value,
-      groesse: Number(userData.value.groesse),
-      gewicht: Number(userData.value.gewicht),
+    // Extrahieren Sie die Daten aus dem userData-Reaktivitätsobjekt
+    const dataToSave = {
+      groesse: userData.value.groesse,
+      gewicht: userData.value.gewicht,
+      name: userData.value.name,
+      level: userData.value.level,
+      points: userData.value.points,
+      pointsToNextLevel: userData.value.pointsToNextLevel
     };
 
-    // Entscheiden Sie, ob Sie den Status aktualisieren oder einen neuen hinzufügen
-    if (status.value && status.value.id) {
-      await updateStatusData({ ...status.value, ...payload });
-    } else {
-      await addNewStatus(payload);
-    }
+    // Aufruf der API-Funktion, um die Daten in die Datenbank zu speichern
+    await addNewStatus(dataToSave);
 
-    await getStatusData(); // Aktualisiert den lokalen Status nach dem Senden
+    // Aktualisieren Sie den lokalen Status nach dem Senden
+    await getStatusData();
   } catch (error) {
     console.error('Fehler beim Senden der Nutzerdaten:', error);
   }
 };
+
 </script>
 
 <style scoped>
@@ -130,7 +133,7 @@ const submitUserData = async () => {
 }
 
 .user-status-card, .ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiss */
 }
 
 .custom-avatar {

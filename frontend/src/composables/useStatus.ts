@@ -30,7 +30,7 @@ export function useStatus() {
         }
     };
 
-    // Fügt neue Statusdaten hinzu und aktualisiert anschließend die lokale Kopie
+    // Fügt neue Statusdaten hinzu und aktualisiert anschliessend die lokale Kopie
     const addNewStatus = async (newStatus: Status) => {
         try {
             // API-Aufruf, um neuen Status hinzuzufügen

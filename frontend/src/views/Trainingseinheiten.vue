@@ -67,6 +67,6 @@ p {
     padding: 20px;
 }
 .ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiss */
 }
 </style>
