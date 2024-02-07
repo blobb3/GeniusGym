@@ -1,8 +1,9 @@
 <template>
     <ion-page>
-        <ion-header>
+        <ion-header class="ion-padding">
             <ion-toolbar>
                 <ion-title class="ion-padding">Unterkörpertraining</ion-title>
+                <p class="ion-padding">{{ dailyQuote }}</p>
                 <ion-buttons slot="start">
                     <ion-back-button defaultHref="/"></ion-back-button>
                 </ion-buttons>
@@ -12,7 +13,7 @@
             <ion-accordion-group :multiple="true">
                 <!-- Dynamische Generierung der Übungen und direkt darunter liegende Buttons -->
                 <div v-for="(exercise, index) in exercises" :key="exercise.id">
-                    <ion-accordion :value="exercise.id">
+                    <ion-accordion :value="exercise.id" class="ion-padding">
                         <ion-item slot="header" color="light">
                             <ion-label>{{ exercise.name }}</ion-label>
                         </ion-item>
@@ -23,7 +24,7 @@
                             </div>
                         </div>
                     </ion-accordion>
-                    <ion-button @click="completeExercise(index)" :disabled="exercise.completed" :class="{ 'completed-button': exercise.completed }">Erledigt</ion-button>
+                    <ion-button @click="completeExercise(index)" :disabled="exercise.completed" :class="{ 'completed-button': exercise.completed }" class="ion-padding">Erledigt</ion-button>
                 </div>
             </ion-accordion-group>
             <!-- Anzeige der gesammelten Punkte -->
@@ -37,6 +38,8 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonButtons, IonBackButton, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
+import { useDailyQuote } from '@/composables/useDailyQuote';
+const { dailyQuote } = useDailyQuote();
 
 interface Exercise {
     id: string;
@@ -89,5 +92,32 @@ const completeExercise = (index: number) => {
 <style scoped>
 .completed-button {
     --background: green;
+}
+
+/* Star Wars-Theme Farbschema und Schriftarten */
+:root {
+    --ion-color-primary: #000; /* Schwarz für den Hintergrund */
+    --ion-color-secondary: #ffe81f; /* Gelb für wichtige Elemente, erinnert an C-3PO */
+    --ion-color-tertiary: #d0d0d0; /* Grau für Nebenelemente */
+}
+
+ion-title, ion-label, ion-button, .ion-padding {
+    color: #ffe81f; /* Gelbe Schriftfarbe für Text */
+}
+
+.completed-button, .incomplete-button {
+    --background: #4CAF50; /* Grün für abgeschlossene Übungen */
+    color: white; /* Weiße Textfarbe für Button-Text */
+}
+
+.incomplete-button {
+    --background: #FFEB3B; /* Gelb für noch nicht abgeschlossene Übungen */
+    --color: black; /* Schwarze Textfarbe für Button-Text */
+}
+
+ion-item[color="light"] {
+    --background: rgba(0, 0, 0, 0.8); /* Dunkler Hintergrund für Items */
+    --color: #ffe81f; /* Gelbe Schriftfarbe */
+    border: 1px solid #ffe81f; /* Gelber Rand */
 }
 </style>

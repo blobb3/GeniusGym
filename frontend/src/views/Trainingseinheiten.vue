@@ -1,30 +1,31 @@
 <template>
     <ion-page class="ion-padding">
-        <ion-header >
+        <ion-header class="ion-padding">
             <ion-toolbar>
                 <ion-title class="ion-padding">Trainingseinheiten</ion-title>
-                <p>Zähle die Tage, nicht die Sterne – Training führt zur Meisterschaft.</p>
+                <p class="ion-padding">{{ dailyQuote }}</p>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
             <!-- Farbige Container für die Trainingseinheiten -->
-            <ion-card @click="navigateToOberkoerper" color="primary">
+            <ion-card @click="navigateToOberkoerper" color="primary" class="ion-padding">
                 <ion-card-content>Oberkörpertraining</ion-card-content>
             </ion-card>
-            <ion-card @click="navigateToUnterkoerper" color="secondary">
+            <br>
+            <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
+            <br>
             <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
-            <ion-card @click="navigateToRunningMap" color="tertiary">
+            <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
                 <ion-card-content>Running</ion-card-content>
             </ion-card>
-
+            <br>
             <!-- Button 'Für heute Fertig' -->
-            <ion-button size="small">Training abschliessen</ion-button>
+            <ion-button size="small" >Training abschliessen</ion-button>
         </ion-content>
     </ion-page>
-    <!--<ion-card-content>Oberkörpertraining - Punkte: {{ globalState.oberkoerperPunkte }}</ion-card-content>
-    <ion-card-content>Unterkörpertraining - Punkte: {{ globalState.unterkoerperPunkte }}</ion-card-content>-->
+
 </template>
   
 <script setup lang="ts">
@@ -39,6 +40,8 @@ import {
     IonButton,
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
+import { useDailyQuote } from '@/composables/useDailyQuote';
+const { dailyQuote } = useDailyQuote();
 
 //für punktzahl von untertrainingseinheiten
 import { inject } from 'vue';
@@ -59,14 +62,39 @@ const navigateToUnterkoerper = () => {
 const navigateToRunningMap = () => {
     router.push('/tabs/runningmap');
 };
+
+
+
+
 </script>
 
 <style scoped>
-.button-container,
+/* Star Wars-Theme Farben */
+:root {
+    --ion-color-primary: #000; /* Schwarz für den Hintergrund */
+    --ion-color-secondary: #ffe81f; /* Gold für wichtige Elemente */
+    --ion-color-tertiary: #d0d0d0; /* Grau für Nebenelemente */
+}
+
+/* Anpassungen für Buttons und Cards */
+ion-card {
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffe81f;
+    border: 1px solid #ffe81f;
+}
+
+ion-button {
+    --background: #000;
+    --color: #ffe81f;
+    border: 1px solid #ffe81f;
+}
+
+ion-title, ion-card-content {
+    color: #ffe81f;
+}
+
 p {
-    padding: 20px;
+    color: #d0d0d0;
 }
-.ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiss */
-}
+
 </style>

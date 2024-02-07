@@ -1,8 +1,9 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header class="ion-padding">
       <ion-toolbar>
         <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
+        <p class="ion-padding">{{ dailyQuote }}</p>
         <ion-buttons slot="start">
           <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
@@ -54,7 +55,8 @@ import {
   IonBackButton,
 } from '@ionic/vue';
 
-
+import { useDailyQuote } from '@/composables/useDailyQuote';
+const { dailyQuote } = useDailyQuote();
 
 // Verwenden refs für den Startzeitpunkt, die verstrichene Zeit und das Intervall
 let startTime = ref<Date | null>(null);
@@ -192,9 +194,33 @@ const createRoute = () => {
   text-align: center;
 }
 
-.ion-padding {
-  --background: #fff;
-  /* Setzt die Hintergrundfarbe auf Weiss */
+/* Star Wars-Theme Anpassungen */
+:root {
+    --ion-color-primary: #000; /* Schwarz */
+    --ion-color-secondary: #ffe81f; /* Gold */
+    --ion-color-tertiary: #d0d0d0; /* Grau */
+}
+
+ion-page {
+    --background: url('path/to/your/starwars-background.jpg') no-repeat center center / cover;
+    font-family: 'Star Jedi', sans-serif;
+}
+
+ion-title, ion-label, ion-button {
+    color: #ffe81f;
+}
+
+.completed-button {
+    --background: green;
+}
+
+ion-item[color="light"] {
+    --background: rgba(0, 0, 0, 0.8);
+    --color: #ffe81f;
+    border: 1px solid #ffe81f;
+}
+.completed-button {
+    --background: green;
 }
 </style>
   

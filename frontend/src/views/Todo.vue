@@ -59,3 +59,23 @@ import { useTodos } from "../composables/useTodos";
 const { newTodo, todos, getTodos, addTodo, finishTodo, archiveTodo } = useTodos();
 
 </script>
+
+<style>
+/* Star Wars-Theme Anpassungen */
+:root {
+    --ion-color-primary: #000; /* Schwarz */
+    --ion-color-secondary: #ffe81f; /* Gold */
+    --ion-color-tertiary: #d0d0d0; /* Grau */
+}
+
+ion-title, ion-label, ion-button {
+    color: #ffe81f;
+}
+
+
+ion-item[color="light"] {
+    --background: rgba(0, 0, 0, 0.8);
+    --color: #ffe81f;
+    border: 1px solid #ffe81f;
+}
+</style>
