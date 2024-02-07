@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API_ROOT } from "@/config/development";
 import { ToDo } from '@/model/todo';
 
+// Ruft alle ToDo-Elemente vonder API ab
 export async function getAllToDos(): Promise<ToDo[]>   { 
     const config = {        
         withCredentials: true
@@ -14,6 +15,7 @@ export async function getAllToDos(): Promise<ToDo[]>   {
     }
 }
 
+// Fügt ein neues ToDo-Element zur API hinzu
 export async function addNewToDo(newToDo: ToDo): Promise<any>   {
     const config = {        
         withCredentials: true
@@ -26,6 +28,7 @@ export async function addNewToDo(newToDo: ToDo): Promise<any>   {
     }
 }
 
+// Aktualisiert ein vorhandenes ToDo-Element
 export async function updateToDo(toDo: ToDo): Promise<any>   {
     const config = {        
         withCredentials: true

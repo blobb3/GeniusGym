@@ -6,6 +6,20 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
+      <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
+      <div class="input-container">
+        <ion-item>
+          <ion-label position="floating">Größe (cm)</ion-label>
+          <ion-input type="number" v-model="userData.groesse"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Gewicht (kg)</ion-label>
+          <ion-input type="number" v-model="userData.gewicht"></ion-input>
+        </ion-item>
+        <ion-button @click="submitUserData" class="testbutton">Daten speichern</ion-button>
+        <br>
+      </div>
+      <!-- Anzeige der Nutzerdaten, Grösse und Gewicht -->
       <div class="container">
         <ion-card class="user-status-card">
           <ion-card-header>
@@ -25,53 +39,110 @@
               <ion-item>
                 <ion-label>Punkte: {{ userData.points }}</ion-label>
               </ion-item>
+              <ion-item>
+                <ion-label>Größe: {{ userData.groesse }} cm</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
+              </ion-item>
             </ion-list>
-            <ion-label class="progress-text">Punkte bis zum nächsten Level: {{ userData.points }} / {{
-              userData.pointsToNextLevel }} </ion-label>
+            <ion-label class="progress-text">Punkte bis zum nächsten Level: {{ userData.points }} / {{ userData.pointsToNextLevel }}</ion-label>
           </ion-card-content>
         </ion-card>
       </div>
     </ion-content>
   </ion-page>
 </template>
-  
-<script setup lang="ts">
-import { person } from 'ionicons/icons';
 
-const userData = {
-  name: 'Hanspeter Ueli Sepp',
-  level: 5,
-  points: 120,
-  pointsToNextLevel: 200,
-};
-</script>
-  
-<style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+<script setup lang="ts">
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonInput,
+  IonButton,
+  IonLabel,
+  IonList,
+  IonItem,
+} from "@ionic/vue";
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+import { person } from 'ionicons/icons';
+import { useStatus } from "@/composables/useStatus";
+
+// Definiert das Datenobjekt für die Benutzerdaten
+interface UserData {
+  groesse?: number;
+  gewicht?: number;
+  name?: string; // Optional
+  level?: number; 
+  points?: number; 
+  pointsToNextLevel?: number; 
 }
 
-.user-status-card {
-  --background: #FFA500;
-  width: 100%;
-  max-width: 400px;
+
+// Initialisierung der userData mit reaktiven Properties für die Inputfelder
+const userData = ref<UserData>({
+name: ""
+});
+
+
+
+const { status, getStatusData, updateStatusData, addNewStatus } = useStatus();
+
+onMounted(async () => {
+  await getStatusData(); // Holt den aktuellen Status beim Laden
+  if (status.value) {
+    userData.value = status.value; // Aktualisiert userData mit den geholten Daten
+  }
+});
+// Methode zum Senden der Nutzerdaten und Hinzufügen zur Liste
+const submitUserData = async () => {
+  try {
+    // Konvertieren Sie userData.value zu dem erwarteten Typ, falls erforderlich
+    const payload = {
+      ...userData.value,
+      groesse: Number(userData.value.groesse),
+      gewicht: Number(userData.value.gewicht),
+    };
+
+    // Entscheiden Sie, ob Sie den Status aktualisieren oder einen neuen hinzufügen
+    if (status.value && status.value.id) {
+      await updateStatusData({ ...status.value, ...payload });
+    } else {
+      await addNewStatus(payload);
+    }
+
+    await getStatusData(); // Aktualisiert den lokalen Status nach dem Senden
+  } catch (error) {
+    console.error('Fehler beim Senden der Nutzerdaten:', error);
+  }
+};
+</script>
+
+<style scoped>
+.input-container, .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-status-card, .ion-padding {
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
 }
 
 .custom-avatar {
   margin: 0 auto;
 }
 
-.card-title,
-.progress-text {
+.card-title, .progress-text {
   color: #000000;
 }
 
-.ion-padding {
-  --background: #fff;
-  /* Setzt die Hintergrundfarbe auf Weiß */
+.testbutton {
+  text-transform: none;
 }
+
 </style>
-  

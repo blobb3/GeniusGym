@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Oberkörpertraining</ion-title>
+                <ion-title class="ion-padding">Oberkörpertraining</ion-title>
                 <ion-buttons slot="start">
                     <ion-back-button defaultHref="/"></ion-back-button>
                 </ion-buttons>
@@ -10,64 +10,61 @@
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
             <ion-accordion-group :multiple="true">
-                <ion-accordion value="first">
-                    <ion-item slot="header" color="light">
-                        <ion-label>Liegestütze</ion-label>
-                    </ion-item>
-                    <div class="ion-padding" slot="content">
-                        <img src="https://www.fitundattraktiv.de/wp-content/uploads/2018/02/liegestuetze_muskelaufbau-liegestuetze_klassisch.gif"
-                            style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
-                        Stärkt Brust, Schultern und Trizeps. 2 Sätze von je 10-15 Wiederholungen.
-                    </div>
-
-                </ion-accordion>
-                <ion-accordion value="second">
-                    <ion-item slot="header" color="light">
-                        <ion-label>Klimmzüge</ion-label>
-                    </ion-item>
-                    <div class="ion-padding" slot="content">
-                        <img src="https://homeworkouts.org/wp-content/uploads/anim-rear-pull-ups.gif"
-                            style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
-                        Zielt auf die Rückenmuskulatur und den Bizeps. 2 Sätze von
-                    </div>
-                </ion-accordion>
-
-                <ion-accordion value="third">
-                    <ion-item slot="header" color="light">
-                        <ion-label>Schulterdrücken</ion-label>
-                    </ion-item>
-                    <div class="ion-padding" slot="content">
-                        <img src="https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif"
-                            style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
-                        Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.
-                    </div>
-                </ion-accordion>
-
+                <!-- Dynamische Generierung der Übungen und direkt darunter liegende Buttons -->
+                <div v-for="(exercise, index) in exercises" :key="exercise.id">
+                    <ion-accordion :value="exercise.id">
+                        <ion-item slot="header" color="light">
+                            <ion-label>{{ exercise.name }}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                            {{ exercise.description }}
+                            <div v-if="exercise.imageUrl">
+                                <img :src="exercise.imageUrl" style="max-width: 360px; height: auto; margin: 0 auto; display: block;">
+                            </div>
+                        </div>
+                    </ion-accordion>
+                    <ion-button @click="completeExercise(index)" :disabled="exercise.completed" :class="{ 'completed-button': exercise.completed }">Erledigt</ion-button>
+                </div>
             </ion-accordion-group>
+            <!-- Anzeige der gesammelten Punkte -->
+            <div class="ion-padding">
+                Gesammelte Punkte: {{ collectedPoints }}
+            </div>
         </ion-content>
     </ion-page>
 </template>
-  
-<script setup lang="ts">
-import {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonAccordionGroup,
-    IonAccordion,
-    IonItem,
-    IonLabel,
-    IonButtons,
-    IonBackButton,
-} from '@ionic/vue';
 
+<script setup lang="ts">
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonButtons, IonBackButton, IonButton } from '@ionic/vue';
+import { ref } from 'vue';
+
+interface Exercise {
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    completed: boolean;
+}
+
+// Übungen für das Oberkörpertraining
+const exercises = ref<Exercise[]>([
+    { id: 'pushups', name: 'Liegestütze', description: 'Stärkt Brust, Schultern und Trizeps. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/liegestuetze_muskelaufbau-liegestuetze_klassisch.gif', completed: false },
+    { id: 'pullups', name: 'Klimmzüge', description: 'Zielt auf die Rückenmuskulatur und den Bizeps. 2 Sätze von 8-12 Wiederholungen.', imageUrl: 'https://homeworkouts.org/wp-content/uploads/anim-rear-pull-ups.gif', completed: false },
+    { id: 'shoulderPress', name: 'Schulterdrücken', description: 'Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif', completed: false },
+]);
+
+const collectedPoints = ref(0);
+
+const completeExercise = (index: number) => {
+    if (!exercises.value[index].completed) {
+        collectedPoints.value += 5;
+        exercises.value[index].completed = true;
+    }
+}
 </script>
 
 <style scoped>
-.ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+.completed-button {
+    --background: green;
 }
 </style>
-  

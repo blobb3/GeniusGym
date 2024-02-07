@@ -9,6 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+//Constructor & Getter
+@NoArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Data
@@ -25,6 +33,14 @@ public class Status {
     private Float bmi;
 
     private String owner;
+
+    private String name;
+
+    private Long level;
+
+    private Long points;
+
+    private Long pointsToNextLevel;
 
     @OneToMany
     private List<ToDo> toDos = new ArrayList<>();
