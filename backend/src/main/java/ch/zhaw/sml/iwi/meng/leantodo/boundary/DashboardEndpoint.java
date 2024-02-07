@@ -1,27 +1,28 @@
 package ch.zhaw.sml.iwi.meng.leantodo.boundary;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ch.zhaw.sml.iwi.meng.leantodo.controller.DashboardController;
 import ch.zhaw.sml.iwi.meng.leantodo.dto.DashboardDTO;
-import ch.zhaw.sml.iwi.meng.leantodo.repositories.DashboardRepository;
 
 @RestController
 @CrossOrigin
 public class DashboardEndpoint {
 
     @Autowired
-    private DashboardRepository dashboardRepository;
+    private DashboardController dashboardController;
 
-    @GetMapping("/dashboards")
-    public List<DashboardDTO> fetchDashboard() {
-        return dashboardRepository.findAll();
+    @GetMapping("/dashboard")
+    public DashboardDTO fetchDashboard(Principal principal) {
+        return dashboardController.createDashBoard(principal.getName());
     }
 
+    /*
     @PostMapping("/dashboards")
     @ResponseStatus(HttpStatus.CREATED)
     public DashboardDTO createDashboard(@RequestBody @NonNull DashboardDTO dashboard) {
@@ -37,4 +38,5 @@ public class DashboardEndpoint {
             return ResponseEntity.notFound().build();
         }
     }
+    */
 }
