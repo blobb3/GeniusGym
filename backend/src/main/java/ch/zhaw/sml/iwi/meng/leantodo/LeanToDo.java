@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ch.zhaw.sml.iwi.meng.leantodo.entity.Role;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.RoleRepository;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.User;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.UserRepository;
+import ch.zhaw.sml.iwi.meng.leantodo.repositories.RoleRepository;
+import ch.zhaw.sml.iwi.meng.leantodo.repositories.UserRepository;
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -30,6 +30,7 @@ public class LeanToDo implements CommandLineRunner {
     private RoleRepository roleRepository;
 
    
+    // Methode wird beim Start der Anwendung asugeführt - Ein neuer User mit Benutzername und PW wird erstellt
     @Override
     public void run(String... args) throws Exception {
         User u = new User();

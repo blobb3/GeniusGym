@@ -1,7 +1,5 @@
 package ch.zhaw.sml.iwi.meng.leantodo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,16 +10,12 @@ import lombok.Data;
 @Data
 public class Trainingseinheit {
     
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer erfolgsquote;
     private String name;
-
-    // private boolean archived = false;
     private boolean done = false;
 
-    @JsonIgnore
-    private String owner;
 }

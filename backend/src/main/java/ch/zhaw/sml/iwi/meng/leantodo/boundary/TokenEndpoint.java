@@ -39,7 +39,7 @@ public class TokenEndpoint {
     @RequestMapping(path = "/auth/logout", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public void logout(Principal principal, HttpServletResponse response) {
-        Cookie cookie = new Cookie("Authentication", null);
+        Cookie cookie = new Cookie("Authentication", null); // mit Null wird das cookie gelöscht, es wird nicht bei uns abgelegt
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
@@ -52,7 +52,7 @@ public class TokenEndpoint {
         Cookie cookie = new Cookie("Authentication", userAuthResponse.getJwsToken());
          
         // This is essential! It must be HTTP-Only, otherwise it can be accessed by JavaScript
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(true); //das heisst, dass token wird nie zurückgeliefert in der Java Script Umgebung - der Browser bekommts
 
         cookie.setPath("/");
         cookie.setMaxAge(3600);
