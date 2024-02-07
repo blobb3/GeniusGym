@@ -37,10 +37,10 @@
       </ion-item>
 
       <ion-button @click="createRoute">Create Route</ion-button>
+      <ion-button @click="resetMap">Reset Map</ion-button>
 
     </ion-content>
   </ion-page>
- 
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -53,6 +53,9 @@ import {
   IonButton,
   IonButtons,
   IonBackButton,
+  IonInput,
+  IonItem,
+  IonLabel
 } from '@ionic/vue';
 
 import { useDailyQuote } from '@/composables/useDailyQuote';
@@ -103,12 +106,12 @@ const resetTimer = () => {
 
 
 
-//Test Map
+//Map erstellen
 let origin = ref('');
 let destination = ref('');
 
 let map: google.maps.Map;
-let clickCount = 0; // Zähler für Klicks, um zwischen Origin und Destination zu unterscheiden
+let clickCount = 0;
 
 const createMap = () => {
   const mapOptions = {
@@ -119,50 +122,65 @@ const createMap = () => {
   map = new google.maps.Map(mapRef, mapOptions);
 
   map.addListener('click', (e: google.maps.MapMouseEvent) => {
-    // Extrahiere die Koordinaten des Klick-Events
     const latLng = e.latLng!;
     const lat = latLng.lat();
     const lng = latLng.lng();
 
-    console.log(`Klick erkannt bei: ${lat}, ${lng}`); // Überprüfe, ob das Klick-Event ausgelöst wird
+    console.log(`Klick erkannt bei: ${lat}, ${lng}`);
 
-    // Entscheide, ob die Koordinaten in `origin` oder `destination` gesetzt werden
     if (clickCount % 2 === 0) {
       origin.value = `${lat}, ${lng}`;
-      console.log(`Startpunkt gesetzt auf: ${origin.value}`); // Überprüfe den Wert von origin
+      console.log(`Startpunkt gesetzt auf: ${origin.value}`);
     } else {
       destination.value = `${lat}, ${lng}`;
-      console.log(`Zielpunkt gesetzt auf: ${destination.value}`); // Überprüfe den Wert von destination
+      console.log(`Zielpunkt gesetzt auf: ${destination.value}`);
     }
-    clickCount++; // Erhöhe den Klickzähler nach jedem Klick
+    clickCount++;
   });
 
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
-  directionsRenderer.setMap(map); // Setze die Karte für den DirectionsRenderer
+  directionsRenderer.setMap(map);
 };
 
 onMounted(() => {
   createMap();
 });
 
+//Route erstellen
 let directionsService: google.maps.DirectionsService;
 let directionsRenderer: google.maps.DirectionsRenderer;
 
 const createRoute = () => {
   const request = {
-    origin: origin.value, // Verwende die Werte von origin und destination
+    origin: origin.value,
     destination: destination.value,
-    travelMode: google.maps.TravelMode.DRIVING, // Oder jede andere verfügbare Reisemethode
+    travelMode: google.maps.TravelMode.WALKING,
   };
 
   directionsService.route(request, (result, status) => {
     if (status === google.maps.DirectionsStatus.OK) {
-      directionsRenderer.setDirections(result); // Zeige die Route auf der Karte an
+      console.log(result)
+      directionsRenderer.setDirections(result);
     } else {
       console.error(`Directions request failed due to ${status}`);
     }
   });
+};
+
+//Route zurücksetzen
+const resetMap = () => {
+  // Entferne den directionsRenderer von der Karte
+  directionsRenderer.setMap(null);
+
+  // Initialisiere den directionsRenderer neu, um ihn für zukünftige Routen bereit zu machen
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map);
+
+  // Optional: Setze origin und destination zurück
+  origin.value = '';
+  destination.value = '';
+  clickCount = 0; // Setze den Klickzähler zurück, wenn nötig
 };
 
 </script>
