@@ -1,6 +1,6 @@
 <template>
     <ion-page class="ion-padding">
-        <ion-header class="ion-padding">
+        <ion-header >
             <ion-toolbar>
                 <ion-title class="ion-padding">Trainingseinheiten</ion-title>
                 <p class="ion-padding">{{ dailyQuote }}</p>
@@ -11,18 +11,22 @@
             <ion-card @click="navigateToOberkoerper" color="primary" class="ion-padding">
                 <ion-card-content>Oberkörpertraining</ion-card-content>
             </ion-card>
-            <br>
             <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
-            <br>
             <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
             <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
                 <ion-card-content>Running</ion-card-content>
             </ion-card>
-            <br>
+            <!-- Anzeige der Punkte für Ober- und Unterkörper -->
+            <div class="ion-padding">
+                Punkte Oberkörper: {{ oberkoerperPunkte }}
+            </div>
+            <div class="ion-padding">
+                Punkte Unterkörper: {{ unterkoerperPunkte }}
+            </div>
             <!-- Button 'Für heute Fertig' -->
-            <ion-button size="small" >Training abschliessen</ion-button>
+            <ion-button size="small" >Training abschließen</ion-button>
         </ion-content>
     </ion-page>
 
@@ -41,11 +45,10 @@ import {
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { useDailyQuote } from '@/composables/useDailyQuote';
-const { dailyQuote } = useDailyQuote();
+import { useMethods } from '@/store'; // Importiere useMethods aus dem globalen Store
 
-//für punktzahl von untertrainingseinheiten
-import { inject } from 'vue';
-const globalState = inject('globalState');
+const { dailyQuote } = useDailyQuote();
+const { oberkoerperPunkte, unterkoerperPunkte } = useMethods(); // Zugriff auf die globalen Store-Daten
 
 const router = useRouter()
 
@@ -62,9 +65,6 @@ const navigateToUnterkoerper = () => {
 const navigateToRunningMap = () => {
     router.push('/tabs/runningmap');
 };
-
-
-
 
 </script>
 

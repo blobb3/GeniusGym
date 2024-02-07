@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonButtons, IonBackButton, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
+import { useMethods } from '@/store';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 const { dailyQuote } = useDailyQuote();
 
@@ -58,12 +59,17 @@ const exercises = ref<Exercise[]>([
 
 const collectedPoints = ref(0);
 
+const { addPointsToOberkoerper } = useMethods(); // Verwende dies für Oberkoerper.vue
+
 const completeExercise = (index: number) => {
     if (!exercises.value[index].completed) {
-        collectedPoints.value += 5;
+        collectedPoints.value += 5; // Lokale Punkte aktualisieren (optional, falls du lokale Punkte anzeigen möchtest)
         exercises.value[index].completed = true;
+        addPointsToOberkoerper(5); // Korrekt für Oberkoerper.vue
     }
-}
+};
+
+
 </script>
 
 <style scoped>
