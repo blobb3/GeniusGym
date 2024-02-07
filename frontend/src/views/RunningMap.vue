@@ -37,6 +37,7 @@
 
       <ion-button @click="createRoute">Create Route</ion-button>
       <ion-button @click="resetMap">Reset Map</ion-button>
+      <ion-button @click="saveRoute">Save Route</ion-button>
 
     </ion-content>
   </ion-page>
@@ -102,8 +103,6 @@ const resetTimer = () => {
   startTime.value = null; // Startzeit zurücksetzen
 };
 
-
-
 //Map erstellen
 let origin = ref('');
 let destination = ref('');
@@ -153,7 +152,7 @@ const createRoute = () => {
   const request = {
     origin: origin.value,
     destination: destination.value,
-    travelMode: google.maps.TravelMode.WALKING,
+    travelMode: google.maps.TravelMode.DRIVING,
   };
 
   directionsService.route(request, (result, status) => {
@@ -168,17 +167,60 @@ const createRoute = () => {
 
 //Route zurücksetzen
 const resetMap = () => {
-  // Entferne den directionsRenderer von der Karte
   directionsRenderer.setMap(null);
 
-  // Initialisiere den directionsRenderer neu, um ihn für zukünftige Routen bereit zu machen
   directionsRenderer = new google.maps.DirectionsRenderer();
   directionsRenderer.setMap(map);
 
-  // Optional: Setze origin und destination zurück
   origin.value = '';
   destination.value = '';
-  clickCount = 0; // Setze den Klickzähler zurück, wenn nötig
+  clickCount = 0;
+};
+
+//Route speichern
+interface RouteSummary {
+  origin: string;
+  destination: string;
+  distance: string;
+  duration: string;
+  steps: {
+    instructions: string;
+    distance: string;
+    duration: string;
+  }[];
+}
+
+let savedRoutes = ref<RouteSummary[]>([]);
+
+const saveRoute = () => {
+  const lastResult = directionsRenderer.getDirections();
+  if (!lastResult || lastResult.routes.length === 0 || lastResult.routes[0].legs.length === 0) {
+    console.error("Keine Route zum Speichern vorhanden.");
+    return;
+  }
+
+  const route = lastResult.routes[0];
+  const leg = route.legs[0];
+
+  if (!leg) {
+    console.error("Die Route enthält keine Legs.");
+    return;
+  }
+
+  const routeSummary = {
+    origin: leg.start_address,
+    destination: leg.end_address,
+    distance: leg.distance ? leg.distance.text : 'Unbekannt',
+    duration: leg.duration ? leg.duration.text : 'Unbekannt',
+    steps: leg.steps ? leg.steps.map(step => ({
+      instructions: step.instructions,
+      distance: step.distance ? step.distance.text : 'Unbekannt',
+      duration: step.duration ? step.duration.text : 'Unbekannt'
+    })) : []
+  };
+
+  savedRoutes.value.push(routeSummary);
+  console.log("Route gespeichert:", routeSummary);
 };
 
 </script>
