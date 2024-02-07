@@ -9,7 +9,7 @@
       <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
       <div class="input-container">
         <ion-item>
-          <ion-label position="floating">Größe (cm)</ion-label>
+          <ion-label position="floating">Grösse (cm)</ion-label>
           <ion-input type="number" v-model="userData.groesse"></ion-input>
         </ion-item>
         <ion-item>
@@ -40,7 +40,7 @@
                 <ion-label>Punkte: {{ userData.points }}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>Größe: {{ userData.groesse }} cm</ion-label>
+                <ion-label>Grösse: {{ userData.groesse }} cm</ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
@@ -133,7 +133,7 @@ const submitUserData = async () => {
 }
 
 .user-status-card, .ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiß */
+  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiss */
 }
 
 .custom-avatar {

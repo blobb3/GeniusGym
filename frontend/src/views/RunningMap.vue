@@ -194,7 +194,7 @@ const createRoute = () => {
 
 .ion-padding {
   --background: #fff;
-  /* Setzt die Hintergrundfarbe auf Weiß */
+  /* Setzt die Hintergrundfarbe auf Weiss */
 }
 </style>
   
