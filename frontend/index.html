@@ -20,6 +20,29 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Ionic App" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <!-- Google Maps -->
+    <script type="module">
+      // Lese den API-Schlüssel aus den Umgebungsvariablen
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    
+      // Erstelle das Skript-Tag für Google Maps
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+    
+      // Füge das Skript-Tag dem Dokument hinzu
+      document.head.appendChild(script);
+    
+      // Callback-Funktion, die aufgerufen wird, wenn das Google Maps Skript geladen ist
+      window.initMap = () => {
+        // Hier kannst du die Karteninitialisierung durchführen oder eine globale Funktion definieren,
+        // die später in deinem Vue-Code aufgerufen wird
+        console.log("Google Maps API geladen und bereit.");
+      };
+    </script>
+    
   </head>
 
   <body>
