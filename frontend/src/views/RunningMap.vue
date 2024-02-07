@@ -10,9 +10,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-button expand="block" @click="generateRoute">Generiere eine Strecke in deiner Nähe</ion-button>
 
-      <!-- Hier könnte ein Bild einer Karte eingefügt werden -->
       <div id="map_canvas" style="height: 400px; width: 100%;"></div>
 
 
@@ -108,9 +106,9 @@ const resetTimer = () => {
 //Map erstellen
 let origin = ref('');
 let destination = ref('');
-
 let map: google.maps.Map;
 let clickCount = 0;
+let isClickListenerActive = ref(true);
 
 const createMap = () => {
   const mapOptions = {
@@ -121,6 +119,7 @@ const createMap = () => {
   map = new google.maps.Map(mapRef, mapOptions);
 
   map.addListener('click', (e: google.maps.MapMouseEvent) => {
+    if (!isClickListenerActive.value) return;
     const latLng = e.latLng!;
     const lat = latLng.lat();
     const lng = latLng.lng();
@@ -154,7 +153,7 @@ const createRoute = () => {
   const request = {
     origin: origin.value,
     destination: destination.value,
-    travelMode: google.maps.TravelMode.DRIVING,
+    travelMode: google.maps.TravelMode.WALKING,
   };
 
   directionsService.route(request, (result, status) => {
@@ -165,6 +164,7 @@ const createRoute = () => {
       console.error(`Directions request failed due to ${status}`);
     }
   });
+  isClickListenerActive.value = false;
 };
 
 //Route zurücksetzen
@@ -177,6 +177,7 @@ const resetMap = () => {
   origin.value = '';
   destination.value = '';
   clickCount = 0;
+  isClickListenerActive.value = true;
 };
 
 //Route speichern
@@ -185,11 +186,6 @@ interface RouteSummary {
   destination: string;
   distance: string;
   duration: string;
-  steps: {
-    instructions: string;
-    distance: string;
-    duration: string;
-  }[];
 }
 
 let savedRoutes = ref<RouteSummary[]>([]);
@@ -214,17 +210,12 @@ const saveRoute = () => {
     destination: leg.end_address,
     distance: leg.distance ? leg.distance.text : 'Unbekannt',
     duration: leg.duration ? leg.duration.text : 'Unbekannt',
-    steps: leg.steps ? leg.steps.map(step => ({
-      instructions: step.instructions,
-      distance: step.distance ? step.distance.text : 'Unbekannt',
-      duration: step.duration ? step.duration.text : 'Unbekannt'
-    })) : []
   };
 
   savedRoutes.value.push(routeSummary);
   console.log("Route gespeichert:", routeSummary);
+  isClickListenerActive.value = false;
 };
-
 </script>
 
   
@@ -256,31 +247,37 @@ const saveRoute = () => {
 
 /* Star Wars-Theme Anpassungen */
 :root {
-    --ion-color-primary: #000; /* Schwarz */
-    --ion-color-secondary: #ffe81f; /* Gold */
-    --ion-color-tertiary: #d0d0d0; /* Grau */
+  --ion-color-primary: #000;
+  /* Schwarz */
+  --ion-color-secondary: #ffe81f;
+  /* Gold */
+  --ion-color-tertiary: #d0d0d0;
+  /* Grau */
 }
 
 ion-page {
-    --background: url('path/to/your/starwars-background.jpg') no-repeat center center / cover;
-    font-family: 'Star Jedi', sans-serif;
+  --background: url('path/to/your/starwars-background.jpg') no-repeat center center / cover;
+  font-family: 'Star Jedi', sans-serif;
 }
 
-ion-title, ion-label, ion-button {
-    color: #ffe81f;
+ion-title,
+ion-label,
+ion-button {
+  color: #ffe81f;
 }
 
 .completed-button {
-    --background: green;
+  --background: green;
 }
 
 ion-item[color="light"] {
-    --background: rgba(0, 0, 0, 0.8);
-    --color: #ffe81f;
-    border: 1px solid #ffe81f;
+  --background: rgba(0, 0, 0, 0.8);
+  --color: #ffe81f;
+  border: 1px solid #ffe81f;
 }
+
 .completed-button {
-    --background: green;
+  --background: green;
 }
 </style>
   
