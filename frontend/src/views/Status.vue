@@ -67,6 +67,12 @@ import {
   IonLabel,
   IonList,
   IonItem,
+  IonCardHeader,
+  IonCard,
+  IonCardTitle,
+  IonCardContent,
+  IonAvatar,
+  IonIcon,
 } from "@ionic/vue";
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
