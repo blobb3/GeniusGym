@@ -1,15 +1,16 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header class="ion-padding">
       <ion-toolbar>
-        <ion-title>Status</ion-title>
+        <ion-title class="ion-padding">Status</ion-title>
+        <p class="ion-padding">{{ dailyQuote }}</p>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
       <div class="input-container">
         <ion-item>
-          <ion-label position="floating">Grösse (cm)</ion-label>
+          <ion-label position="floating" >Grösse (cm)</ion-label>
           <ion-input type="number" v-model="userData.groesse"></ion-input>
         </ion-item>
         <ion-item>
@@ -23,26 +24,26 @@
       <div class="container">
         <ion-card class="user-status-card">
           <ion-card-header>
-            <ion-card-title class="card-title">Sei eins mit der Fitness, der Sweat ist mit dir!</ion-card-title>
+            <ion-card-title class="card-title ion-padding" >Sei eins mit der Fitness, der Sweat ist mit dir!</ion-card-title>
           </ion-card-header>
-          <ion-card-content class="ion-text-center">
+          <ion-card-content class="ion-text-center" >
             <ion-avatar class="custom-avatar">
               <ion-icon :icon="person" size="large"></ion-icon>
             </ion-avatar>
             <ion-list lines="none">
-              <ion-item>
+              <ion-item class="ion-padding">
                 <ion-label>Name: {{ userData.name }}</ion-label>
               </ion-item>
-              <ion-item>
+              <ion-item class="ion-padding">
                 <ion-label>Level: {{ userData.level }}</ion-label>
               </ion-item>
-              <ion-item>
+              <ion-item class="ion-padding">
                 <ion-label>Punkte: {{ userData.points }}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>Grösse: {{ userData.groesse }} cm</ion-label>
+                <ion-label class="ion-padding">Grösse: {{ userData.groesse }} cm</ion-label>
               </ion-item>
-              <ion-item>
+              <ion-item class="ion-padding">
                 <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
               </ion-item>
             </ion-list>
@@ -77,6 +78,8 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import { person } from 'ionicons/icons';
 import { useStatus } from "@/composables/useStatus";
+import { useDailyQuote } from '@/composables/useDailyQuote';
+const { dailyQuote } = useDailyQuote();
 
 // Definiert das Datenobjekt für die Benutzerdaten
 interface UserData {
@@ -138,20 +141,34 @@ const submitUserData = async () => {
   align-items: center;
 }
 
-.user-status-card, .ion-padding {
-  --background: #fff; /* Setzt die Hintergrundfarbe auf Weiss */
-}
-
 .custom-avatar {
   margin: 0 auto;
-}
-
-.card-title, .progress-text {
-  color: #000000;
 }
 
 .testbutton {
   text-transform: none;
 }
 
+/* Star Wars-Theme Anpassungen */
+:root {
+    --ion-color-primary: #000; /* Schwarz */
+    --ion-color-secondary: #ffe81f; /* Gold */
+    --ion-color-tertiary: #d0d0d0; /* Grau */
+}
+
+ion-page {
+    --background: url('path/to/your/starwars-background.jpg') no-repeat center center / cover;
+    font-family: 'Star Jedi', sans-serif;
+}
+
+ion-title, ion-label, ion-button {
+    color: #ffe81f;
+}
+
+
+ion-item[color="light"] {
+    --background: rgba(0, 0, 0, 0.8);
+    --color: #ffe81f;
+    border: 1px solid #ffe81f;
+}
 </style>
