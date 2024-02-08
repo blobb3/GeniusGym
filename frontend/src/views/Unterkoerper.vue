@@ -40,6 +40,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup
 import { ref } from 'vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 const { dailyQuote } = useDailyQuote();
+import { useMethods } from '@/store';
 
 interface Exercise {
     id: string;
@@ -62,11 +63,14 @@ const exercises = ref<Exercise[]>([
 
 const collectedPoints = ref(0);
 
+
+const { addPointsToUnterkoerper } = useMethods(); // Verwende dies für Unterkoerper.vue
 // Methode zum Abschliessen einer Übung und Hinzufügen von Punkten
 const completeExercise = (index: number) => {
     if (!exercises.value[index].completed) {
         collectedPoints.value += 5;
         exercises.value[index].completed = true;
+        addPointsToUnterkoerper(5); 
     }
 }
 

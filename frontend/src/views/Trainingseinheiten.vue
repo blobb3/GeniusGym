@@ -1,6 +1,6 @@
 <template>
     <ion-page class="ion-padding">
-        <ion-header >
+        <ion-header>
             <ion-toolbar>
                 <ion-title class="ion-padding">Trainingseinheiten</ion-title>
                 <p class="ion-padding">{{ dailyQuote }}</p>
@@ -14,6 +14,7 @@
             <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
+            <br>
             <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
             <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
                 <ion-card-content>Running</ion-card-content>
@@ -26,10 +27,9 @@
                 Punkte Unterkörper: {{ unterkoerperPunkte }}
             </div>
             <!-- Button 'Für heute Fertig' -->
-            <ion-button size="small" >Training abschließen</ion-button>
+            <ion-button size="small">Training abschließen</ion-button>
         </ion-content>
     </ion-page>
-
 </template>
   
 <script setup lang="ts">
@@ -45,10 +45,10 @@ import {
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { useDailyQuote } from '@/composables/useDailyQuote';
-import { useMethods } from '@/store'; // Importiere useMethods aus dem globalen Store
+import { useState } from '@/store'; // useState anstatt useMethods
 
 const { dailyQuote } = useDailyQuote();
-const { oberkoerperPunkte, unterkoerperPunkte } = useMethods(); // Zugriff auf die globalen Store-Daten
+const { oberkoerperPunkte, unterkoerperPunkte } = useState(); // useState verwenden, um auf den globalen Zustand zuzugreifen
 
 const router = useRouter()
 
@@ -71,9 +71,12 @@ const navigateToRunningMap = () => {
 <style scoped>
 /* Star Wars-Theme Farben */
 :root {
-    --ion-color-primary: #000; /* Schwarz für den Hintergrund */
-    --ion-color-secondary: #ffe81f; /* Gold für wichtige Elemente */
-    --ion-color-tertiary: #d0d0d0; /* Grau für Nebenelemente */
+    --ion-color-primary: #000;
+    /* Schwarz für den Hintergrund */
+    --ion-color-secondary: #ffe81f;
+    /* Gold für wichtige Elemente */
+    --ion-color-tertiary: #d0d0d0;
+    /* Grau für Nebenelemente */
 }
 
 /* Anpassungen für Buttons und Cards */
@@ -89,12 +92,12 @@ ion-button {
     border: 1px solid #ffe81f;
 }
 
-ion-title, ion-card-content {
+ion-title,
+ion-card-content {
     color: #ffe81f;
 }
 
 p {
     color: #d0d0d0;
 }
-
 </style>
