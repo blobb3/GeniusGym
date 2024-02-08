@@ -2,8 +2,8 @@
   <ion-page>
     <ion-header class="ion-padding">
       <ion-toolbar>
-        <ion-title class="ion-padding">Wähle deine Joggingstrecke</ion-title>
-        <p class="ion-padding">{{ dailyQuote }}</p>
+        <ion-title>Wähle deine Joggingstrecke</ion-title>
+        <p>{{ dailyQuote }}</p>
         <ion-buttons slot="start">
           <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
@@ -26,13 +26,12 @@
       </div>
 
       <ion-item>
-        <ion-label position="floating">Startpunkt</ion-label>
-        <ion-input v-model="origin"></ion-input>
+        <ion-input label="Startpunkt" :value="origin" @ionChange="origin = $event.target.value"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Zielpunkt</ion-label>
-        <ion-input v-model="destination"></ion-input>
+        <ion-input label="Zielpunkt" :value="destination" @ionChange="destination = $event.target.value"></ion-input>
       </ion-item>
+
 
       <ion-button @click="createRoute">Create Route</ion-button>
       <ion-button @click="resetMap">Reset Map</ion-button>
@@ -54,7 +53,6 @@ import {
   IonBackButton,
   IonInput,
   IonItem,
-  IonLabel
 } from '@ionic/vue';
 
 import { useDailyQuote } from '@/composables/useDailyQuote';
@@ -73,10 +71,6 @@ function formatElapsedTime(milliseconds: number): string {
   const seconds = (totalSeconds % 60).toString().padStart(2, '0');
   return `${hours}:${minutes}:${seconds}`;
 }
-
-const generateRoute = () => {
-  // Logik zum Generieren einer Route
-};
 
 const startTimer = () => {
   if (timerInterval !== null) return; // Verhindern, dass der Timer mehrfach gestartet wird
@@ -190,7 +184,11 @@ interface RouteSummary {
 
 let savedRoutes = ref<RouteSummary[]>([]);
 
-const saveRoute = () => {
+const username = 'user';
+const password = 'user';
+const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
+const saveRoute = async () => {
   const lastResult = directionsRenderer.getDirections();
   if (!lastResult || lastResult.routes.length === 0 || lastResult.routes[0].legs.length === 0) {
     console.error("Keine Route zum Speichern vorhanden.");
@@ -199,32 +197,42 @@ const saveRoute = () => {
 
   const route = lastResult.routes[0];
   const leg = route.legs[0];
-
   if (!leg) {
     console.error("Die Route enthält keine Legs.");
     return;
   }
 
-  const routeSummary = {
+  const routeSummary: RouteSummary = {
     origin: leg.start_address,
     destination: leg.end_address,
     distance: leg.distance ? leg.distance.text : 'Unbekannt',
     duration: leg.duration ? leg.duration.text : 'Unbekannt',
   };
 
-  savedRoutes.value.push(routeSummary);
-  console.log("Route gespeichert:", routeSummary);
-  isClickListenerActive.value = false;
+  try {
+    const response = await fetch('http://localhost:8080/api/route', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth,
+      },
+      body: JSON.stringify(routeSummary),
+    });
+
+    if (response.ok) {
+      const savedRoute: RouteSummary = await response.json();
+      console.log("Route erfolgreich gespeichert:", savedRoute);
+      savedRoutes.value.push(savedRoute);
+    } else {
+      console.error("Fehler beim Speichern der Route:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Fehler beim Speichern der Route:", error);
+  }
 };
 </script>
 
-  
 <style scoped>
-.map-container img {
-  width: 100%;
-  margin: 16px 0;
-}
-
 .timer-buttons {
   display: flex;
   justify-content: space-around;
@@ -233,8 +241,9 @@ const saveRoute = () => {
 
 .timer-display {
   text-align: center;
-  margin-top: 16px;
-  color: black;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #ffe81f;
 }
 
 .ion-padding {
