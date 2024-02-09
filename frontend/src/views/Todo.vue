@@ -1,43 +1,43 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header class="ion-header-flex">
+      <TheFooter />
       <ion-toolbar>
-        <ion-title>Todos</ion-title>
+        <ion-title class="ion-padding">Gym-Goals</ion-title>
+        <p class="ion-padding">{{ dailyQuote }}</p>
+        <ion-buttons slot="end">
+          <ion-button @click="navigateToAddMemory" class="ion-padding">
+            <ion-icon :icon="addIcon"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="ion-padding">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Todos</ion-title>
+          <ion-title size="large">Goals</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-list>
-        <ion-item :key="todo.id" v-for="todo in todos">
+        <ion-item :key="todo.id" v-for="todo in todos" class="todo-item">
           <ion-grid>
             <ion-row>
-              <ion-col>
-                {{ todo.title }}
+              <ion-col size="8">
+                <h2>{{ todo.title }}</h2>
+                <p v-if="todo.imageUrl">Bild vorhanden</p>
               </ion-col>
-              <ion-col>
-                <ion-button color="danger" v-if="!todo.done && !todo.archived"
-                  @click="finishTodo(todo)">Finish</ion-button>
-                <ion-button color="success" v-if="todo.done && !todo.archived"
-                  @click="archiveTodo(todo)">Archive</ion-button>
+              <ion-col size="4" class="action-buttons">
+                <ion-button color="warning" v-if="!todo.done && !todo.archived" @click="finishTodo(todo)">Erledigt</ion-button>
+                <ion-button color="success" v-if="todo.done && !todo.archived" @click="archiveTodo(todo)">Archivieren</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>
-      </ion-list>
-      <ion-item>
-        <ion-input type="text" placeholder="New Todo Title" v-model="newTodo.title"></ion-input>
-      </ion-item>
-      <div padding>
-        <ion-button @click="addTodo()">Add New ToDo</ion-button>
-      </div>
+      </ion-list>      
     </ion-content>
   </ion-page>
-
 </template>
+
 
 <script setup lang="ts">
 import {
@@ -53,29 +53,69 @@ import {
   IonList,
   IonButton,
   IonInput,
+  useIonRouter,
 } from "@ionic/vue";
-import { useTodos } from "../composables/useTodos";
 
+import { useTodos } from "../composables/useTodos";
+import { add } from 'ionicons/icons';
+import { useDailyQuote } from '@/composables/useDailyQuote';
+import TheFooter from '@/components/TheFooter.vue';
+
+const { dailyQuote } = useDailyQuote();
 const { newTodo, todos, getTodos, addTodo, finishTodo, archiveTodo } = useTodos();
+const addIcon = add;
+
+const router = useIonRouter();
+const navigateToAddMemory = () => {
+  router.push('/addmemory');
+};
 
 </script>
 
 <style>
-/* Star Wars-Theme Anpassungen */
+/* Star Wars-Theme Anpassungen weiter verwenden */
 :root {
-    --ion-color-primary: #000; /* Schwarz */
-    --ion-color-secondary: #ffe81f; /* Gold */
-    --ion-color-tertiary: #d0d0d0; /* Grau */
+  --ion-color-primary: #000; /* Schwarz */
+  --ion-color-secondary: #ffe81f; /* Gold */
+  --ion-color-tertiary: #d0d0d0; /* Grau */
 }
 
-ion-title, ion-label, ion-button {
-    color: #ffe81f;
+ion-title,
+ion-label,
+ion-button {
+  color: #ffe81f;
 }
-
 
 ion-item[color="light"] {
-    --background: rgba(0, 0, 0, 0.8);
-    --color: #ffe81f;
-    border: 1px solid #ffe81f;
+  --background: rgba(0, 0, 0, 0.8);
+  --color: #ffe81f;
+  border: 1px solid #ffe81f;
 }
+
+/* Zusätzliche Stil-Anpassungen für die Gym-Memories Liste */
+.todo-item {
+  --background: #1c1c1c;
+  --border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #ffe81f;
+  font-size: 1.2rem;
+}
+
+.action-buttons ion-button {
+  margin-top: 10px;
+}
+
+.ion-header-flex {
+  display: flex;
+  justify-content: center; /* Zentriert die Inhalte horizontal */
+  align-items: center; /* Zentriert die Inhalte vertikal */
+  flex-direction: column; /* Stapelt die Kinder vertikal */
+  text-align: center; /* Zentriert den Text der direkten Kinder */
+}
+
+
 </style>

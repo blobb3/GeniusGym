@@ -1,6 +1,7 @@
 <template>
     <ion-page class="ion-padding">
-        <ion-header>
+        <ion-header class="ion-header-flex">
+            <TheFooter />
             <ion-toolbar>
                 <ion-title class="ion-padding">Trainingseinheiten</ion-title>
                 <p class="ion-padding">{{ dailyQuote }}</p>
@@ -14,7 +15,6 @@
             <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
                 <ion-card-content>Unterkörpertraining</ion-card-content>
             </ion-card>
-            <br>
             <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
             <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
                 <ion-card-content>Running</ion-card-content>
@@ -46,6 +46,7 @@ import {
 import { useRouter } from 'vue-router';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 import { useState } from '@/store'; // useState anstatt useMethods
+import TheFooter from '@/components/TheFooter.vue';
 
 const { dailyQuote } = useDailyQuote();
 const { oberkoerperPunkte, unterkoerperPunkte } = useState(); // useState verwenden, um auf den globalen Zustand zuzugreifen
@@ -100,4 +101,15 @@ ion-card-content {
 p {
     color: #d0d0d0;
 }
-</style>
+
+.ion-header-flex {
+  display: flex;
+  justify-content: center; /* Zentriert die Inhalte horizontal */
+  align-items: center; /* Zentriert die Inhalte vertikal */
+  flex-direction: column; /* Stapelt die Kinder vertikal */
+  text-align: center; /* Zentriert den Text der direkten Kinder */
+}
+
+
+
+</style> 

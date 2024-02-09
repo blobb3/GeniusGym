@@ -7,8 +7,9 @@
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { useStore } from './store';
-
+import { defineComponent, onMounted } from 'vue';
 useStore();
+
 
 </script>
 

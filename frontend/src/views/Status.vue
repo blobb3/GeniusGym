@@ -1,6 +1,7 @@
 <template>
   <ion-page>
-    <ion-header class="ion-padding">
+    <ion-header class="ion-header-flex">
+      <TheFooter />
       <ion-toolbar>
         <ion-title class="ion-padding">Status</ion-title>
         <p class="ion-padding">{{ dailyQuote }}</p>
@@ -79,6 +80,8 @@ import axios from 'axios';
 import { person } from 'ionicons/icons';
 import { useStatus } from "@/composables/useStatus";
 import { useDailyQuote } from '@/composables/useDailyQuote';
+import TheFooter from '@/components/TheFooter.vue';
+
 const { dailyQuote } = useDailyQuote();
 
 // Definiert das Datenobjekt für die Benutzerdaten
@@ -156,19 +159,21 @@ const submitUserData = async () => {
     --ion-color-tertiary: #d0d0d0; /* Grau */
 }
 
-ion-page {
-    --background: url('path/to/your/starwars-background.jpg') no-repeat center center / cover;
-    font-family: 'Star Jedi', sans-serif;
-}
-
 ion-title, ion-label, ion-button {
     color: #ffe81f;
 }
-
 
 ion-item[color="light"] {
     --background: rgba(0, 0, 0, 0.8);
     --color: #ffe81f;
     border: 1px solid #ffe81f;
+}
+
+.ion-header-flex {
+  display: flex;
+  justify-content: center; /* Zentriert die Inhalte horizontal */
+  align-items: center; /* Zentriert die Inhalte vertikal */
+  flex-direction: column; /* Stapelt die Kinder vertikal */
+  text-align: center; /* Zentriert den Text der direkten Kinder */
 }
 </style>

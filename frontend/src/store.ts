@@ -1,6 +1,6 @@
 import { reactive, readonly, provide, inject } from 'vue';
 
-interface State {
+export interface State {
   oberkoerperPunkte: number;
   unterkoerperPunkte: number;
 }

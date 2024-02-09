@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Tabs from '@/views/Tabs.vue'
-import Login from '@/views/Login.vue'
+import Tabs from '@/views/Tabs.vue';
+import Login from '@/views/Login.vue';
+import AddMemory from '@/views/AddMemory.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,6 +12,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     component: Login,
+  },
+  {
+    path: '/addmemory', 
+    component: AddMemory, 
+  },
+  {
+    path: '/memories/add', 
+    component: () => import('@/pages/AddMemoryPage.vue')
   },
   {
     path: '/tabs/',
@@ -24,6 +33,17 @@ const routes: Array<RouteRecordRaw> = [
         path: 'todo',
         component: () => import('@/views/Todo.vue')
       },
+      {
+        path: 'memories',
+        component: () => import('@/pages/MemoriesPage.vue'),
+        children: [
+          {
+            path: ':id', 
+            component: () => import('@/pages/MemoryDetailsPage.vue')
+          }
+        ]
+      },
+      
       {
         path: 'projects',
         component: () => import('@/views/Projects.vue')
