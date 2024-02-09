@@ -1,26 +1,27 @@
 <template>
   <ion-page>
-    <ion-header class="ion-padding">
-      <ion-toolbar>
-        <ion-title class="ion-padding">Dashboard</ion-title>
-        <p class="ion-padding">{{ dailyQuote }}</p>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
-      <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    <ion-content class="content-center">
+      <div class="centered-content">
+        <ion-toolbar>
+          <ion-title>Dashboard</ion-title>
+        </ion-toolbar>
+        <p>{{ dailyQuote }}</p>
+        <div class="centered-container">
+          <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
+        </div>
+        <div class="centered-container" id="chart_div"></div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
+import { IonPage, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 import { onMounted } from 'vue';
 
 const { dailyQuote } = useDailyQuote();
 
-// Funktion direkt im <script setup> definieren
 const isWeekday = (dateString: string) => {
   const date = new Date(dateString);
   const utcDay = date.getUTCDay();
@@ -42,20 +43,36 @@ onMounted(() => {
 
     const data = new google.visualization.DataTable();
     data.addColumn('string', 'Datum');
-    data.addColumn('number', 'Fortschritt');
+    data.addColumn('number', 'Kilometer');
 
     data.addRows([
-      ['1. Jan', 1000],
-      ['1. Feb', 1170],
-      ['1. Mär', 660],
-      ['1. Apr', 1030],
-      // Fügen Sie hier Ihre Daten ein
+      ['1. Jan', 10],
+      ['1. Feb', 8.5],
+      ['1. Mär', 17.25],
+      ['1. Apr', 14.3],
+      // ...weitere Datenpunkte...
     ]);
 
-    const options: any = {
+    const options = {
       title: 'Dein Fitness-Fortschritt',
       curveType: 'function',
-      legend: { position: 'bottom' }
+      legend: { position: 'bottom' },
+      hAxis: {
+        title: 'Datum',
+        titleTextStyle: { color: '#333' },
+        slantedText: true,
+        slantedTextAngle: 45,
+      },
+      vAxis: {
+        title: 'Kilometer',
+        gridlines: {
+          color: '#e9e9e9',
+          count: 4,
+        },
+        minValue: 0,
+      },
+      pointSize: 5,
+      colors: ['#blue'],
     };
 
     const chart = new google.visualization.LineChart(chartDiv);
@@ -65,5 +82,36 @@ onMounted(() => {
 </script>
 
 <style>
-/* Deine vorhandenen Stilregeln */
+.content-center {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.centered-content {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#chart_div {
+  width: 100%;
+  height: 400px;
+  /* Größere Höhe für bessere Darstellung */
+}
+
+.centered-content>* {
+  text-align: center;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+ion-title {
+  text-align: center;
+}
 </style>
