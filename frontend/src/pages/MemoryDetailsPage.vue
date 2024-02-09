@@ -3,13 +3,16 @@
   <base-layout
     :page-title="loadedMemory ? loadedMemory.title : 'Loading...'"
     page-default-back-link="/tabs/memories"
+    label="Memory Details"
   >
-    <h2 v-if="!loadedMemory">Could not find a memory for the given id.</h2>
+    <h2 v-if="!loadedMemory" aria-label="Memory not found">Could not find a memory for the given id.</h2>
     <memory-overview 
       v-else 
       :title="loadedMemory.title" 
       :image="loadedMemory.image" 
-      :description="loadedMemory.description"></memory-overview>
+      :description="loadedMemory.description"
+      label="Memory Overview"
+    ></memory-overview>
   </base-layout>
 </template>
 
@@ -28,30 +31,30 @@ interface Memory {
 const route = useRoute();
 const loadedMemory = ref<Memory | null>(null);
 
-console.log("Komponente initialisiert. Beobachte Route-Änderungen...");
+console.log("Component initialized. Watching for route changes...");
 
-// Funktion zum Laden des Memory-Objekts
+// Function to load the memory object
 function loadMemory(id: string | string[]) {
-  console.log(`Lade Memory mit ID: ${id}`);
+  console.log(`Loading memory with ID: ${id}`);
   const memories: Memory[] = JSON.parse(localStorage.getItem('memories') || '[]');
-  const memoryId = Array.isArray(id) ? id[0] : id; // Unterstützung für den Fall, dass id ein Array ist
-  console.log(`Verwende Memory-ID: ${memoryId} für die Suche`);
+  const memoryId = Array.isArray(id) ? id[0] : id; // Support for the case when id is an array
+  console.log(`Using memory ID: ${memoryId} for search`);
   const memory = memories.find((m) => m.id === memoryId);
   if (memory) {
-    console.log(`Gefundenes Memory:`, memory);
+    console.log(`Found memory:`, memory);
   } else {
-    console.log("Kein Memory mit der gegebenen ID gefunden.");
+    console.log("No memory found with the given ID.");
   }
   loadedMemory.value = memory || null;
 }
-// Reagiere auf Änderungen der Route-Parameter
+// React to changes in route parameters
 watch(() => route.params.id, (newId) => {
-  console.log(`Route-Parameter geändert: ${newId}`);
+  console.log(`Route parameter changed: ${newId}`);
   if (typeof newId === 'string' || Array.isArray(newId)) {
-    console.log("Aufruf von loadMemory mit neuer ID.");
+    console.log("Calling loadMemory with new ID.");
     loadMemory(newId);
   } else {
-    console.log("Neue ID ist nicht gültig.");
+    console.log("New ID is not valid.");
   }
 }, { immediate: true });
 </script>

@@ -1,18 +1,19 @@
 <!--Darstellung der Details einer Erinnerung (Bild, Titel, Description)-->
 <template>
   <ion-img :src="image" :alt="title"></ion-img>
-  <h2 class="ion-text-center">{{ title }}</h2>
-  <p class="ion-text-center">{{ description }}</p>
+  <ion-label label="Titel" class="ion-text-center">{{ title }}</ion-label>
+  <ion-label label="Beschreibung" class="ion-text-center">{{ description }}</ion-label>
 </template>
 
 <script lang="ts">
-import { IonImg } from '@ionic/vue';
+import { IonImg, IonLabel } from '@ionic/vue';
 import { onMounted } from 'vue';
 
 export default {
   props: ['title', 'image', 'description'],
   components: {
-    IonImg
+    IonImg,
+    IonLabel
   },
   setup(props) {
     onMounted(() => {

@@ -5,13 +5,11 @@
     <ion-thumbnail slot="start">
       <ion-img :src="memory.image" :alt="memory.title"></ion-img>
     </ion-thumbnail>
-    <ion-label>
-      {{ memory.title }}
-    </ion-label>
+    <ion-label label="Titel">{{ memory.title }}</ion-label>
   </ion-item>
 </template>
 
-<script lang = "ts">
+<script lang="ts">
 import { IonItem, IonThumbnail, IonImg, IonLabel } from "@ionic/vue";
 import { onMounted } from "vue";
 

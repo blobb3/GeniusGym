@@ -32,3 +32,4 @@ const saveMemory = (memoryData: { title: string, imageUrl: string, description: 
   console.log("Navigation zurück zu den Erinnerungen");
 };
 </script>
+

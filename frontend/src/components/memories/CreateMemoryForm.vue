@@ -1,4 +1,3 @@
-<!--Benutzeroberfläche zum Hinzuüfgen von Erinnerung in Form eines Forms-->
 <template>
   <ion-page>
     <ion-header>
@@ -28,8 +27,8 @@
               </ion-button>
             </ion-item>
             <ion-item>
-              <ion-textarea aria-label="Description" :rows="5" v-model="enteredDescription">Beschreibe deine
-                Erinnerung</ion-textarea>
+              <ion-label position="floating">Beschreibung</ion-label>
+              <ion-textarea :rows="5" v-model="enteredDescription"></ion-textarea>
             </ion-item>
           </ion-list>
           <ion-button type="submit" expand="block" class="butti">Save</ion-button>
@@ -78,18 +77,18 @@ export default defineComponent({
 
     const takePhoto = async () => {
       console.log("takePhoto aufgerufen");
-  try {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      quality: 60
-    });
-    console.log("Foto aufgenommen:", photo); 
-    takenImageUrl.value = photo.webPath ?? "";
-  } catch (error) {
-    console.error("Fehler beim Aufnehmen des Fotos:", error);
-  }
-};
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera,
+          quality: 60
+        });
+        console.log("Foto aufgenommen:", photo); 
+        takenImageUrl.value = photo.webPath ?? "";
+      } catch (error) {
+        console.error("Fehler beim Aufnehmen des Fotos:", error);
+      }
+    };
 
 
     const submitForm = () => {
@@ -114,7 +113,6 @@ export default defineComponent({
     };
   }
 });
-
 </script>
 
 <style scoped>
@@ -156,4 +154,5 @@ ion-item {
 .container {
   display: flex;
   justify-content: center;
-}</style>
+}
+</style>

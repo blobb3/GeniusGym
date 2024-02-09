@@ -5,7 +5,7 @@
       <ion-toolbar>
         <ion-title class="ion-padding">All Gym-Memories</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="goToAddMemoryPage">
+          <ion-button @click="goToAddMemoryPage" aria-label="Add Memory">
             <ion-icon :icon="addIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -16,12 +16,13 @@
       <ion-list>
         <ion-item v-for="memory in memories" :key="memory.id" @click="viewMemoryDetails(memory.id)">
           {{ memory.title }}
-          <ion-icon :icon="trashIcon" slot="end" @click.stop="deleteMemory(memory.id)"></ion-icon>
+          <ion-icon :icon="trashIcon" slot="end" @click.stop="deleteMemory(memory.id)" aria-label="Delete Memory"></ion-icon>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-page>
 </template>
+
 
 <script setup lang="ts">
 import {

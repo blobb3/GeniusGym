@@ -1,5 +1,5 @@
 <template>
-    <ion-page>
+    <IonPage>
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="start">
@@ -43,7 +43,7 @@
                 <img src="https://media3.giphy.com/media/26FmQ6EOvLxp6cWyY/source.gif" class="yoda">
             </div>
         </ion-content>
-    </ion-page>
+    </IonPage>
 </template>
 
 <script setup lang="ts">
@@ -56,7 +56,7 @@ import {
     IonItem,
     IonInput,
     IonButton,
-    IonButtons, IonList, IonLabel, IonTextarea, IonThumbnail, IonIcon
+    IonButtons, IonList, IonLabel, IonTextarea, IonThumbnail, IonIcon,
 } from '@ionic/vue';
 import { useTodos } from '@/composables/useTodos';
 import { useDailyQuote } from '@/composables/useDailyQuote';
