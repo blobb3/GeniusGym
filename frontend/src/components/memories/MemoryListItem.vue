@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { IonItem, IonThumbnail, IonImg, IonLabel } from "@ionic/vue";
+import { IonItem, IonThumbnail, IonImg, IonLabel, IonIcon } from "@ionic/vue";
 import { onMounted } from "vue";
 
 export default {
@@ -20,6 +20,7 @@ export default {
     IonThumbnail,
     IonImg,
     IonLabel,
+    IonIcon,
   },
   setup(props) {
     onMounted(() => {

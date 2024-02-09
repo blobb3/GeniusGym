@@ -92,6 +92,10 @@ const takePhoto = async () => {
 
 </script>
 <style scoped >
+
+ion-title {
+    color: #ffe81f;
+}
 .death-star-container {
     border-radius: 50%;
     width: 300px;

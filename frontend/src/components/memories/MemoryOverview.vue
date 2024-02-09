@@ -6,14 +6,15 @@
 </template>
 
 <script lang="ts">
-import { IonImg, IonLabel } from '@ionic/vue';
+import { IonImg, IonLabel, IonIcon } from '@ionic/vue';
 import { onMounted } from 'vue';
 
 export default {
   props: ['title', 'image', 'description'],
   components: {
     IonImg,
-    IonLabel
+    IonLabel,
+    IonIcon,
   },
   setup(props) {
     onMounted(() => {

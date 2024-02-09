@@ -45,6 +45,7 @@ import {
   IonHeader,
   IonContent,
   IonToolbar,
+  IonIcon,
   IonList,
   IonItem,
   IonInput,
@@ -67,6 +68,7 @@ export default defineComponent({
     IonButton,
     IonBackButton,
     IonThumbnail,
+    IonIcon,
   },
   setup() {
     console.log("Setup-Funktion gestartet");

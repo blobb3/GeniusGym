@@ -37,16 +37,6 @@ import {
 import { camera } from 'ionicons/icons';
 import { CameraResultType, CameraSource } from '@capacitor/camera';
 
-async function takePhoto() {
-  const photo = await Camera.getPhoto({
-    resultType: CameraResultType.Uri,
-    source: CameraSource.Camera,
-    quality: 60
-  });
-
-  console.log(photo.webPath);
-}
-
 import { Camera } from '@capacitor/camera';
 
 export default {
@@ -73,16 +63,19 @@ export default {
   methods: {
     async takePhoto() {
       console.log("takePhoto gestartet");
-      const photo = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera,
-        quality: 60
-      });
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera,
+          quality: 60
+        });
 
-      // Verwendung des Nullish Coalescing Operators, um sicherzustellen, dass takenImageUrl immer ein String ist
-      this.takenImageUrl = photo.webPath ?? "";
-      console.log("Foto erfolgreich aufgenommen: ", this.takenImageUrl);
-
+        // Verwendung des Nullish Coalescing Operators, um sicherzustellen, dass takenImageUrl immer ein String ist
+        this.takenImageUrl = photo.webPath ?? "";
+        console.log("Foto erfolgreich aufgenommen: ", this.takenImageUrl);
+      } catch (error) {
+        console.error("Fehler beim Aufnehmen des Fotos:", error);
+      }
     },
     submitForm() {
       console.log("submitForm gestartet");
@@ -93,10 +86,7 @@ export default {
       };
       console.log("Speichern der Memory-Daten: ", memoryData);
       this.$emit("save-memory", memoryData);
-
     },
   },
 };
-</script>
-
 </script>
