@@ -1,14 +1,15 @@
 <template>
-  <ion-page>
+  <ion-page >
     <ion-header class="ion-header-flex">
         <TheFooter />
       <ion-toolbar>
-        <ion-title>All Gym-Memories</ion-title>
+        <ion-title class="ion-padding">All Gym-Memories</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="goToAddMemoryPage">
             <ion-icon :icon="addIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
+        <p class="ion-padding">{{ dailyQuote }}</p>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -39,7 +40,9 @@ import {
 import { add , trash} from 'ionicons/icons';
 import { ref, onMounted } from 'vue';
 import TheFooter from '@/components/TheFooter.vue';
+import { useDailyQuote } from '@/composables/useDailyQuote';
 
+const { dailyQuote } = useDailyQuote();
 const ionRouter = useIonRouter();
 const addIcon = add;
 const memories = ref(JSON.parse(localStorage.getItem('memories') || '[]'));

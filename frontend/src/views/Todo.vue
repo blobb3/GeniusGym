@@ -117,5 +117,32 @@ h2 {
   text-align: center; /* Zentriert den Text der direkten Kinder */
 }
 
+/* Leichte Animation beim Hovern über die Liste */
+ion-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
+/* Zurücksetzen der Transformation beim Mouseout */
+ion-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Pulsierender Effekt für die Buttons XD*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.action-buttons ion-button {
+  animation: pulse 1.5s infinite;
+}
 </style>

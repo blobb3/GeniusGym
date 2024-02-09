@@ -29,7 +29,7 @@ export default {
 }
 
 .logo-image {
-  border-radius: 70px; 
+  border-radius: 55px; 
   margin: 25px 25px; 
  
 }

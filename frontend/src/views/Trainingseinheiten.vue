@@ -9,6 +9,7 @@
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
             <!-- Farbige Container für die Trainingseinheiten -->
+            
             <ion-card @click="navigateToOberkoerper" color="primary" class="ion-padding">
                 <ion-card-content>Oberkörpertraining</ion-card-content>
             </ion-card>
@@ -27,7 +28,8 @@
                 Punkte Unterkörper: {{ unterkoerperPunkte }}
             </div>
             <!-- Button 'Für heute Fertig' -->
-            <ion-button size="small">Training abschließen</ion-button>
+            <transition name="fade" mode="out-in">
+            <ion-button size="small">Training abschließen</ion-button></transition>
         </ion-content>
     </ion-page>
 </template>
@@ -91,7 +93,12 @@ ion-button {
     --background: #000;
     --color: #ffe81f;
     border: 1px solid #ffe81f;
+    transition: transform 0.3s ease;
 }
+
+ion-button:active {
+  transform: scale(0.96);
+} 
 
 ion-title,
 ion-card-content {
@@ -110,6 +117,36 @@ p {
   text-align: center; /* Zentriert den Text der direkten Kinder */
 }
 
+/* Basis Animation für Karten */
+@keyframes popIn {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
+/* Animation beim Hovern über die Karte */
+ion-card:hover {
+  animation: popIn 0.5s ease forwards;
+}
+
+/* Animation beim Fokussieren der Karte (z.B. bei Touch-Events) */
+ion-card:focus-within {
+  animation: popIn 0.5s ease forwards;
+}
+
+/* Fügen Sie diesen Code zu Ihrem <style> hininzu */
+
+/* Vue-Übergänge */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
 
 </style> 
