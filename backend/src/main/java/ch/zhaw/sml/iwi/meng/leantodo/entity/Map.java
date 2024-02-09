@@ -1,13 +1,14 @@
 package ch.zhaw.sml.iwi.meng.leantodo.entity;
 
-import java.sql.Time;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Entity
 @Data
 public class Map {
@@ -16,9 +17,13 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private Time zeit;
-    private Long weg;
-
+    @NonNull
+    private String origin;
+    @NonNull
+    private String destination;
+    @NonNull
+    private String distance;
+    @NonNull
+    private String duration;
     
 }

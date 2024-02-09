@@ -7,43 +7,63 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Dashboard</ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
+      <div id="chart_div" style="width: 100%; height: 500px;"></div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
+import { onMounted } from 'vue';
+
 const { dailyQuote } = useDailyQuote();
+
+// Funktion direkt im <script setup> definieren
+const isWeekday = (dateString: string) => {
+  const date = new Date(dateString);
+  const utcDay = date.getUTCDay();
+  return utcDay !== 0 && utcDay !== 6;
+};
+
+onMounted(() => {
+  google.charts.load('current', { packages: ['corechart', 'line'] });
+  google.charts.setOnLoadCallback(() => {
+    drawChart();
+  });
+
+  function drawChart() {
+    const chartDiv = document.getElementById('chart_div');
+    if (!chartDiv) {
+      console.error('Das Diagramm-Element wurde nicht gefunden.');
+      return;
+    }
+
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Datum');
+    data.addColumn('number', 'Fortschritt');
+
+    data.addRows([
+      ['1. Jan', 1000],
+      ['1. Feb', 1170],
+      ['1. Mär', 660],
+      ['1. Apr', 1030],
+      // Fügen Sie hier Ihre Daten ein
+    ]);
+
+    const options: any = {
+      title: 'Dein Fitness-Fortschritt',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    const chart = new google.visualization.LineChart(chartDiv);
+    chart.draw(data, options);
+  }
+});
 </script>
 
 <style>
-/* Star Wars-Theme Anpassungen */
-:root {
-    --ion-color-primary: #000; /* Schwarz */
-    --ion-color-secondary: #ffe81f; /* Gold */
-    --ion-color-tertiary: #d0d0d0; /* Grau */
-}
-
-ion-title, ion-label, ion-button {
-    color: #ffe81f;
-}
-
-.completed-button {
-    --background: green;
-}
-
-ion-item[color="light"] {
-    --background: rgba(0, 0, 0, 0.8);
-    --color: #ffe81f;
-    border: 1px solid #ffe81f;
-}
-.completed-button {
-    --background: green;
-}
+/* Deine vorhandenen Stilregeln */
 </style>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.Map;
 import ch.zhaw.sml.iwi.meng.leantodo.repositories.MapRepository;
 
+
 @RestController
 @CrossOrigin
 public class MapEndpoint {
@@ -37,4 +38,12 @@ public class MapEndpoint {
                 })
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PostMapping("/api/route")
+    public ResponseEntity<Map> saveMap(@RequestBody Map map) {
+        Map route = new Map(map.getOrigin(), map.getDestination(), map.getDistance(), map.getDuration());
+        Map savedRoute = mapRepository.save(route);
+        return new ResponseEntity<>(savedRoute, HttpStatus.CREATED);
+    }
+    
 }
