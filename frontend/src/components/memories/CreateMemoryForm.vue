@@ -11,29 +11,30 @@
     </ion-header>
 
     <ion-content>
-      <form class="ion-padding" @submit.prevent="submitForm">
-        <ion-list>
-          <ion-item>
-            <ion-label position="floating">Title</ion-label>
-            <ion-input type="text" required v-model="enteredTitle" />
-          </ion-item>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img :src="takenImageUrl" />
-            </ion-thumbnail>
-            <ion-button type="button" fill="clear" @click="takePhoto">
-              <ion-icon :icon="cameraIcon"></ion-icon>
-              Take Photo
-            </ion-button>
-          </ion-item>
-
-          <ion-item>
-            <ion-textarea aria-label="Description" :rows="5" v-model="enteredDescription">Memory Description</ion-textarea>
-          </ion-item>
-
-        </ion-list>
-        <ion-button type="submit" expand="block">Save</ion-button>
-      </form>
+      <div class="container">
+        <form class="ion-padding" @submit.prevent="submitForm">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Erinnerungstitel</ion-label>
+              <ion-input type="text" required v-model="enteredTitle" />
+            </ion-item>
+            <ion-item>
+              <ion-thumbnail slot="start">
+                <img :src="takenImageUrl" />
+              </ion-thumbnail>
+              <ion-button type="button" fill="clear" @click="takePhoto">
+                <ion-icon :icon="cameraIcon"></ion-icon>
+                Lade Fotos
+              </ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-textarea aria-label="Description" :rows="5" v-model="enteredDescription">Beschreibe deine
+                Erinnerung</ion-textarea>
+            </ion-item>
+          </ion-list>
+          <ion-button type="submit" expand="block" class="butti">Save</ion-button>
+        </form>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -105,3 +106,44 @@ export default defineComponent({
 });
 
 </script>
+
+<style scoped>
+/* Stil für ion-item, um die Input-Felder zu umrahmen */
+ion-item {
+  --border-color: #ffe81f;
+  /* Gelb für die Umrandung */
+  --border-style: solid;
+  --border-width: 2px;
+  --border-radius: 10px;
+  /* Ecken abrunden */
+  margin-bottom: 15px;
+  /* Fügt etwas Abstand zwischen den Feldern hinzu */
+}
+
+
+/* Stil für ion-button, um ihn kleiner zu machen und zu zentrieren */
+.butti {
+  --padding-start: 14px;
+  /* Kleiner Padding für den Button */
+  --padding-end: 14px;
+  /* Kleiner Padding für den Button */
+  --padding-top: 8px;
+  /* Kleiner Padding für den Button */
+  --padding-bottom: 8px;
+  /* Kleiner Padding für den Button */
+  margin: 0 auto;
+  /* Zentriert den Button horizontal */
+  display: block;
+  /* Ermöglicht das Zentrieren mit margin */
+  width: auto;
+  /* Setzt die Breite auf den Inhalt des Buttons */
+  max-width: 200px;
+  /* Maximale Breite des Buttons */
+  --background: linear-gradient(45deg, #691a67, #ffe81f);
+  /* Gelbe Hintergrundfarbe */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}</style>
