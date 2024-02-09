@@ -2,7 +2,10 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { IonicVue } from '@ionic/vue';
-import { useStore } from './store'
+import { useStore } from './store';
+
+// Importiere die base-layout Komponente
+import BaseLayout from './components/base/BaseLayout.vue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -28,6 +31,9 @@ const app = createApp(App);
 app.use(IonicVue);
 app.use(router);
 app.use(useStore);
+
+// base-layout als globale Komponente
+app.component('base-layout', BaseLayout);
 
 router.isReady().then(() => {
   app.mount('#app');

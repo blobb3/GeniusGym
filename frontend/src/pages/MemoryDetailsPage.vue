@@ -2,7 +2,7 @@
 <template>
   <base-layout
     :page-title="loadedMemory ? loadedMemory.title : 'Loading...'"
-    page-default-back-link="tabs/memories"
+    page-default-back-link="/tabs/memories"
   >
     <h2 v-if="!loadedMemory">Could not find a memory for the given id.</h2>
     <memory-overview 
@@ -14,19 +14,44 @@
 </template>
 
 <script setup lang="ts">
-import MemoryOverview from "../components/memories/MemoryOverview.vue";
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import MemoryOverview from '../components/memories/MemoryOverview.vue';
 
-const router = useRouter();
-const memoryId = ref<string | null>(null); // memoryId als Ref<string | null> deklariert
+interface Memory {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+}
 
-// Annahme: Die Memories werden in LocalStorage gespeichert
-const loadedMemory = ref(JSON.parse(localStorage.getItem('memories') || '[]').find((memory: any) => memory.id === memoryId.value));
+const route = useRoute();
+const loadedMemory = ref<Memory | null>(null);
 
-// Um das Memory basierend auf der ID in der Route zu laden
-router.beforeEach((to, from, next) => {
-  memoryId.value = Array.isArray(to.params.id) ? null : to.params.id; // Überprüfung auf Array
-  next();
-});
+console.log("Komponente initialisiert. Beobachte Route-Änderungen...");
+
+// Funktion zum Laden des Memory-Objekts
+function loadMemory(id: string | string[]) {
+  console.log(`Lade Memory mit ID: ${id}`);
+  const memories: Memory[] = JSON.parse(localStorage.getItem('memories') || '[]');
+  const memoryId = Array.isArray(id) ? id[0] : id; // Unterstützung für den Fall, dass id ein Array ist
+  console.log(`Verwende Memory-ID: ${memoryId} für die Suche`);
+  const memory = memories.find((m) => m.id === memoryId);
+  if (memory) {
+    console.log(`Gefundenes Memory:`, memory);
+  } else {
+    console.log("Kein Memory mit der gegebenen ID gefunden.");
+  }
+  loadedMemory.value = memory || null;
+}
+// Reagiere auf Änderungen der Route-Parameter
+watch(() => route.params.id, (newId) => {
+  console.log(`Route-Parameter geändert: ${newId}`);
+  if (typeof newId === 'string' || Array.isArray(newId)) {
+    console.log("Aufruf von loadMemory mit neuer ID.");
+    loadMemory(newId);
+  } else {
+    console.log("Neue ID ist nicht gültig.");
+  }
+}, { immediate: true });
 </script>

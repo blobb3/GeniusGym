@@ -75,6 +75,7 @@ export default {
 
   methods: {
     async takePhoto() {
+      console.log("takePhoto gestartet");
       const photo = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
         source: CameraSource.Camera,
@@ -83,15 +84,19 @@ export default {
 
       // Verwendung des Nullish Coalescing Operators, um sicherzustellen, dass takenImageUrl immer ein String ist
       this.takenImageUrl = photo.webPath ?? "";
+      console.log("Foto erfolgreich aufgenommen: ", this.takenImageUrl); 
 
     },
     submitForm() {
+      console.log("submitForm gestartet"); 
       const memoryData = {
         title: this.enteredTitle,
         imageUrl: this.takenImageUrl,
         description: this.enteredDescription,
       };
+      console.log("Speichern der Memory-Daten: ", memoryData); 
       this.$emit("save-memory", memoryData);
+      
     },
   },
 };

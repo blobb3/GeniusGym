@@ -7,11 +7,19 @@
 
 <script lang="ts">
 import { IonImg } from '@ionic/vue';
+import { onMounted } from 'vue';
 
 export default {
   props: ['title', 'image', 'description'],
   components: {
     IonImg
+  },
+  setup(props) {
+    onMounted(() => {
+      console.log("Komponente geladen mit Titel:", props.title);
+      console.log("Bild-URL:", props.image);
+      console.log("Beschreibung:", props.description);
+    });
   }
 }
 </script>

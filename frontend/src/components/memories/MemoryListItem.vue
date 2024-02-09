@@ -13,6 +13,7 @@
 
 <script lang = "ts">
 import { IonItem, IonThumbnail, IonImg, IonLabel } from "@ionic/vue";
+import { onMounted } from "vue";
 
 export default {
   props: ["memory"],
@@ -21,6 +22,11 @@ export default {
     IonThumbnail,
     IonImg,
     IonLabel,
+  },
+  setup(props) {
+    onMounted(() => {
+      console.log("Memory-Objekt beim Mounten der Komponente:", props.memory);
+    });
   },
 };
 </script>

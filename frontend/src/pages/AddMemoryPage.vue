@@ -7,22 +7,28 @@
 
 <script setup lang="ts">
 import CreateMemoryForm from "../components/memories/CreateMemoryForm.vue";
-import { useIonRouter } from '@ionic/vue'; // Korrekter Import
+import { useIonRouter } from '@ionic/vue'; 
 
-const ionRouter = useIonRouter(); // Verwende ionRouter als Variablennamen
+const ionRouter = useIonRouter();
 
 const saveMemory = (memoryData: { title: string, imageUrl: string, description: string }) => {
+  console.log("Speichern der Erinnerung gestartet", memoryData); 
+
   const newMemory = {
-    id: Math.random(), // Beispiel für eine zufällige ID, anpassen wie nötig
+    id: Math.random().toString(), // Sicherstellen, dass die ID ein String ist
     ...memoryData
   };
+  console.log("Neue Erinnerung erstellt", newMemory);
 
   // Speichern des neuen Memory in einer lokalen Liste
   const memories = JSON.parse(localStorage.getItem('memories') || '[]');
   memories.push(newMemory);
   localStorage.setItem('memories', JSON.stringify(memories));
 
+  console.log("Erinnerung gespeichert", memories);
+
   // Navigieren zurück zur Memories-Seite mit useIonRouter
   ionRouter.replace('/tabs/memories');
+  console.log("Navigation zurück zu den Erinnerungen");
 };
 </script>

@@ -70,26 +70,36 @@ export default defineComponent({
     IonThumbnail,
   },
   setup() {
+    console.log("Setup-Funktion gestartet");
     const ionRouter = useIonRouter();
     const enteredTitle = ref('');
     const enteredDescription = ref('');
     const takenImageUrl = ref('');
 
     const takePhoto = async () => {
-      const photo = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera,
-        quality: 60
-      });
-      takenImageUrl.value = photo.webPath ?? "";
-    };
+      console.log("takePhoto aufgerufen");
+  try {
+    const photo = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 60
+    });
+    console.log("Foto aufgenommen:", photo); 
+    takenImageUrl.value = photo.webPath ?? "";
+  } catch (error) {
+    console.error("Fehler beim Aufnehmen des Fotos:", error);
+  }
+};
+
 
     const submitForm = () => {
+      console.log("submitForm aufgerufen");
       const memoryData = {
         title: enteredTitle.value,
         imageUrl: takenImageUrl.value,
         description: enteredDescription.value,
       };
+      console.log("Memory Daten:", memoryData); 
       // Logik zum Speichern des Memory könnte hier implementiert werden
       ionRouter.replace('/tabs/memories');
     };

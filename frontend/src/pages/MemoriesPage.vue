@@ -49,27 +49,31 @@ const memories = ref(JSON.parse(localStorage.getItem('memories') || '[]'));
 const trashIcon = trash;
 
 const viewMemoryDetails = (memoryId: string) => {
+  console.log(`Navigiere zu den Details der Erinnerung mit der ID: ${memoryId}`);
   ionRouter.push(`/tabs/memories/${memoryId}`);
 };
 
 const goToAddMemoryPage = () => {
+  console.log("Navigiere zur Seite zum Hinzufügen einer Erinnerung");
   ionRouter.push('/memories/add');
 };
 
 const deleteMemory = (memoryId: string) => {
+  console.log(`Lösche Erinnerung mit der ID: ${memoryId}`);
   const index = memories.value.findIndex((memory: { id: string; }) => memory.id === memoryId);
   if (index !== -1) {
     memories.value.splice(index, 1);
     localStorage.setItem('memories', JSON.stringify(memories.value));
+  } else {
+    console.log("Keine Erinnerung mit dieser ID gefunden.");
   }
 };
 
 onMounted(() => {
+  console.log("Komponente geladen. Geladene Erinnerungen: ", memories.value);
   memories.value = JSON.parse(localStorage.getItem('memories') || '[]');
 });
 </script>
-
-
 
 <style scoped>
 /* Star Wars-Theme Farben */
