@@ -34,7 +34,6 @@ export function useDailyQuote() {
     "Nichts ist unmöglich für den, der eine entschlossene Geisteshaltung hat – also sei wie ein Jedi und meistere dein Training.",
     "Vergiss niemals, wer du bist – sei wie Simba und trainiere wie ein König des Fitnessdschungels.",
     "Dein Training ist wie ein Zaubertrank – mische die Zutaten mit Bedacht und werde zum Meister deiner eigenen Geschichte.",
-
     "Wenn das Training einfach wäre, würde es 'Schlafen' heißen. Aber wer will schon ein Nickerchen, wenn man ein Superheld sein kann?",
     "Ich kämpfe nicht gegen die Schwerkraft, ich nutze sie zu meinem Vorteil – durch Kniebeugen und Kreuzheben.",
   ];
