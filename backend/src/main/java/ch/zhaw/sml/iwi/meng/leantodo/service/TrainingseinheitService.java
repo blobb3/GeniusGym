@@ -17,7 +17,7 @@ public interface TrainingseinheitService {
 
     Trainingseinheit updateTrainingseinheit(Trainingseinheit trainingseinheit);
 
-    Integer saveGesamtpunktzahl(Long benutzerId, Integer gesamtpunktzahl);
+    Integer saveGesamtpunktzahl(Integer gesamtpunktzahl);
 
-    Integer getGesamtpunktzahl(Long benutzerId);
+    Integer getGesamtpunktzahl();
 }

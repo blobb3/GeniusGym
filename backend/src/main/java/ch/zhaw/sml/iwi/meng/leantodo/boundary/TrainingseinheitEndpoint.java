@@ -50,16 +50,18 @@ public class TrainingseinheitEndpoint {
     }
 
     // Gesamtpunktzahl speichern
-    @PostMapping("/gesamtpunktzahl/{benutzerId}")
-    public ResponseEntity<?> saveGesamtpunktzahl(@PathVariable Long benutzerId, @RequestBody Integer gesamtpunktzahl) {
-        Integer gespeichertePunktzahl = trainingseinheitService.saveGesamtpunktzahl(benutzerId, gesamtpunktzahl);
+    @PostMapping("/gesamtpunktzahl")
+    public ResponseEntity<?> saveGesamtpunktzahl(@RequestBody Integer gesamtpunktzahl) {
+        // Speichern der Gesamtpunktzahl ohne Benutzerbezug
+        Integer gespeichertePunktzahl = trainingseinheitService.saveGesamtpunktzahl(gesamtpunktzahl);
         return ResponseEntity.ok(gespeichertePunktzahl);
     }
 
     // Gesamtpunktzahl abrufen
-    @GetMapping("/gesamtpunktzahl/{benutzerId}")
-    public ResponseEntity<?> getGesamtpunktzahl(@PathVariable Long benutzerId) {
-        Integer punktzahl = trainingseinheitService.getGesamtpunktzahl(benutzerId);
+    @GetMapping("/gesamtpunktzahl")
+    public ResponseEntity<?> getGesamtpunktzahl() {
+        // Abrufen der Gesamtpunktzahl ohne Benutzerbezug
+        Integer punktzahl = trainingseinheitService.getGesamtpunktzahl();
         return ResponseEntity.ok(punktzahl);
     }
 

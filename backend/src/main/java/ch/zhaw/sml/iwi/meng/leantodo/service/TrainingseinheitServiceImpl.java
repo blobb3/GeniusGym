@@ -14,7 +14,6 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
     @Autowired
     private TrainingseinheitRepository trainingseinheitRepository;
 
-    @SuppressWarnings("null")
     @Override
     public Trainingseinheit addTrainingseinheit(Trainingseinheit trainingseinheit) {
         // Punkte setzen
@@ -30,6 +29,7 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
 
     @Override
     public Trainingseinheit getTrainingseinheitById(Long id) {
+        @SuppressWarnings("null")
         Optional<Trainingseinheit> trainingseinheit = trainingseinheitRepository.findById(id);
         return trainingseinheit.orElse(null);
     }
@@ -39,6 +39,7 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
         return trainingseinheitRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     @Override
     public void deleteTrainingseinheit(Long id) {
         trainingseinheitRepository.deleteById(id);
@@ -54,14 +55,12 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
     }
 
     @Override
-    public Integer saveGesamtpunktzahl(Long benutzerId, Integer gesamtpunktzahl) {
-        // Logik zum Speichern der Gesamtpunktzahl
-        return gesamtpunktzahl; 
-    } 
+    public Integer saveGesamtpunktzahl(Integer gesamtpunktzahl) {
+        return gesamtpunktzahl;
+    }
 
     @Override
-    public Integer getGesamtpunktzahl(Long benutzerId) {
-        // Logik zum Abrufen der Gesamtpunktzahl
+    public Integer getGesamtpunktzahl() {
         return 0; 
     }
 }

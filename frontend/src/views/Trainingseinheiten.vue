@@ -111,8 +111,9 @@ const submitTrainingData = async () => {
       unterkoerperPunkte: unterkoerperPunkteValue,
     };
 
+
     // Daten an das Backend senden, einschließlich des Authorization-Headers
-    await axios.post('http://localhost:8080/punkte', punkteData, {
+    await axios.post('http://localhost:8080/gesamtpunktzahl', punkteData, {
       headers: {
         'Authorization': basicAuth,
       },
