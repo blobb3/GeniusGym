@@ -52,4 +52,16 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
         }
         return null;
     }
+
+    @Override
+    public Integer saveGesamtpunktzahl(Long benutzerId, Integer gesamtpunktzahl) {
+        // Logik zum Speichern der Gesamtpunktzahl
+        return gesamtpunktzahl; 
+    } 
+
+    @Override
+    public Integer getGesamtpunktzahl(Long benutzerId) {
+        // Logik zum Abrufen der Gesamtpunktzahl
+        return 0; 
+    }
 }

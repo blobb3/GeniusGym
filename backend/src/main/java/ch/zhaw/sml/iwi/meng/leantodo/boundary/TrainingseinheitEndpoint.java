@@ -4,6 +4,7 @@ import ch.zhaw.sml.iwi.meng.leantodo.entity.Trainingseinheit;
 import ch.zhaw.sml.iwi.meng.leantodo.service.TrainingseinheitService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,4 +48,19 @@ public class TrainingseinheitEndpoint {
         trainingseinheitService.deleteTrainingseinheit(id);
         return "Exercise deleted.";
     }
+
+    // Gesamtpunktzahl speichern
+    @PostMapping("/gesamtpunktzahl/{benutzerId}")
+    public ResponseEntity<?> saveGesamtpunktzahl(@PathVariable Long benutzerId, @RequestBody Integer gesamtpunktzahl) {
+        Integer gespeichertePunktzahl = trainingseinheitService.saveGesamtpunktzahl(benutzerId, gesamtpunktzahl);
+        return ResponseEntity.ok(gespeichertePunktzahl);
+    }
+
+    // Gesamtpunktzahl abrufen
+    @GetMapping("/gesamtpunktzahl/{benutzerId}")
+    public ResponseEntity<?> getGesamtpunktzahl(@PathVariable Long benutzerId) {
+        Integer punktzahl = trainingseinheitService.getGesamtpunktzahl(benutzerId);
+        return ResponseEntity.ok(punktzahl);
+    }
+
 }
