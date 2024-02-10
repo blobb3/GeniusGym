@@ -107,13 +107,6 @@ const userData = ref<UserData>({
 
 const { status, getStatusData, updateStatusData, addNewStatus } = useStatus();
 
-onMounted(async () => {
-  await getStatusData(); // Holt den aktuellen Status beim Laden
-  if (status.value) {
-    userData.value = status.value; // Aktualisiert userData mit den geholten Daten
-  }
-});
-
 
 // Methode zum Senden der Nutzerdaten und Hinzufügen zur Liste
 const submitUserData = async () => {
@@ -127,9 +120,6 @@ const submitUserData = async () => {
       points: userData.value.points,
       pointsToNextLevel: userData.value.pointsToNextLevel
     };
-
-    // Aufruf der API-Funktion, um die Daten in die Datenbank zu speichern
-    await addNewStatus(dataToSave);
 
     // Aktualisieren Sie den lokalen Status nach dem Senden
     await getStatusData();

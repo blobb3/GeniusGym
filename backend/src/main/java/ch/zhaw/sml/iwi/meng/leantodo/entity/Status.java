@@ -18,10 +18,21 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long gewicht;
-    private Long groesse;
+    private Integer groesse; // in cm
+    private Integer gewicht; // in kg
+    private String name;
+    private Integer punkte; // Punktestand
+    private Level level; // Berechnetes Feld, nicht direkt gespeichert
 
     @Temporal(TemporalType.DATE)
     private Date datum;
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
     
 }
