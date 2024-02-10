@@ -32,7 +32,7 @@
       </div>
       <!-- Button 'Für heute Fertig' -->
       <transition name="fade" mode="out-in">
-        <ion-button size="small">Training abschließen</ion-button>
+        <ion-button @click="submitTrainingData" size="small">Training abschließen</ion-button>
       </transition>
     </ion-content>
   </ion-page>
@@ -56,6 +56,7 @@ import TheFooter from '@/components/TheFooter.vue';
 import { useStore } from '@/store';
 import { watch } from 'vue';
 import { computed } from 'vue';
+import axios from 'axios';
 
 const { dailyQuote } = useDailyQuote();
 const { oberkoerperPunkte, unterkoerperPunkte } = useState(); // useState verwenden, um auf den globalen Zustand zuzugreifen
@@ -91,6 +92,39 @@ watch(unterkoerperPunkte, (neu, alt) => {
 
 //Erstellen einer reaktiven Referenz für die Gesamtpunktzahl
 const gesamtPunkte = computed(() => oberkoerperPunkte.value + unterkoerperPunkte.value);
+
+// Backend-Teil (erstmal Punkte in Datenbank hochladen)
+
+// Backend-Teil (Punkte in Datenbank hochladen)
+const submitTrainingData = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    
+    // Punkte aus den globalen Zuständen abrufen
+    const oberkoerperPunkteValue = oberkoerperPunkte.value;
+    const unterkoerperPunkteValue = unterkoerperPunkte.value;
+
+    // Daten vorbereiten
+    const punkteData = {
+      oberkoerperPunkte: oberkoerperPunkteValue,
+      unterkoerperPunkte: unterkoerperPunkteValue
+    };
+
+    console.log(`Bearer Token: ${token}`);
+
+    // Daten an das Backend senden, einschließlich des Authorization-Headers
+    await axios.post('http://localhost:8080/punkte', punkteData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    console.log('Punkte erfolgreich gespeichert');
+  } catch (error) {
+    console.error('Fehler beim Speichern der Punkte:', error);
+  }
+};
+
 
 </script>
 

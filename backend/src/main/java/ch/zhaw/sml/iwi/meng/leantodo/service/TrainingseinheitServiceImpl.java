@@ -17,15 +17,15 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
     @SuppressWarnings("null")
     @Override
     public Trainingseinheit addTrainingseinheit(Trainingseinheit trainingseinheit) {
-        // Setze die Punkte basierend auf der Übungstyp oder anderen Kriterien
+        // Punkte setzen
         trainingseinheit.setPunkte(berechnePunkteFuerUebung(trainingseinheit));
         return trainingseinheitRepository.save(trainingseinheit);
     }
 
-    // Hier eine mögliche Implementierung zur Punkteberechnung
+    // Implementierung zur Punkteberechnung
     private Integer berechnePunkteFuerUebung(Trainingseinheit trainingseinheit) {
-        // Implementiere eine Logik, um die Punkte zu berechnen
-        return 10; // Beispielwert
+        //  Logik, um die Punkte zu berechnen
+        return 10; 
     }
 
     @Override

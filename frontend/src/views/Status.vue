@@ -11,7 +11,7 @@
       <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
       <div class="input-container">
         <ion-item>
-          <ion-label position="floating" >Grösse (cm)</ion-label>
+          <ion-label position="floating">Grösse (cm)</ion-label>
           <ion-input type="number" v-model="userData.groesse"></ion-input>
         </ion-item>
         <ion-item>
@@ -25,9 +25,10 @@
       <div class="container">
         <ion-card class="user-status-card">
           <ion-card-header>
-            <ion-card-title class="card-title ion-padding" >Sei eins mit der Fitness, der Sweat ist mit dir!</ion-card-title>
+            <ion-card-title class="card-title ion-padding">Sei eins mit der Fitness, der Sweat ist mit
+              dir!</ion-card-title>
           </ion-card-header>
-          <ion-card-content class="ion-text-center" >
+          <ion-card-content class="ion-text-center">
             <ion-avatar class="custom-avatar">
               <ion-icon :icon="person" size="large"></ion-icon>
             </ion-avatar>
@@ -39,8 +40,9 @@
                 <ion-label>Level: {{ userData.level }}</ion-label>
               </ion-item>
               <ion-item class="ion-padding">
-                <ion-label>Punkte: {{ userData.points }}</ion-label>
+                <ion-label>Punktestand: {{ gesamtPunkte }}</ion-label>
               </ion-item>
+
               <ion-item>
                 <ion-label class="ion-padding">Grösse: {{ userData.groesse }} cm</ion-label>
               </ion-item>
@@ -48,7 +50,8 @@
                 <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
               </ion-item>
             </ion-list>
-            <ion-label class="progress-text">Punkte bis zum nächsten Level: {{ userData.points }} / {{ userData.pointsToNextLevel }}</ion-label>
+            <ion-label class="progress-text">Punkte bis zum nächsten Level: {{ userData.points }} / {{
+              userData.pointsToNextLevel }}</ion-label>
           </ion-card-content>
         </ion-card>
       </div>
@@ -75,7 +78,7 @@ import {
   IonAvatar,
   IonIcon,
 } from "@ionic/vue";
-import { onMounted, ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { person } from 'ionicons/icons';
 import { useStatus } from "@/composables/useStatus";
@@ -89,15 +92,15 @@ interface UserData {
   groesse?: number;
   gewicht?: number;
   name?: string; // Optional
-  level?: number; 
-  points?: number; 
-  pointsToNextLevel?: number; 
+  level?: number;
+  points?: number;
+  pointsToNextLevel?: number;
 }
 
 
 // Initialisierung der userData mit reaktiven Properties für die Inputfelder
 const userData = ref<UserData>({
-name: ""
+  name: ""
 });
 
 
@@ -135,10 +138,40 @@ const submitUserData = async () => {
   }
 };
 
+//Backend-Teil (Levelsystem)
+// Definieren Sie ein Interface für die Struktur einer Trainingseinheit
+interface Trainingseinheit {
+  id: number;
+  name: string;
+  punkte: number;
+  // Fügen Sie hier weitere erforderliche Eigenschaften hinzu
+}
+
+// Verwenden Sie das Interface, um den Typ von trainingseinheiten festzulegen
+const trainingseinheiten = ref<Trainingseinheit[]>([]);
+
+const fetchTrainingData = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/trainingseinheit');
+    trainingseinheiten.value = response.data;
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Trainingseinheiten:', error);
+  }
+};
+
+onMounted(() => {
+  fetchTrainingData();
+});
+
+// Berechnete Eigenschaft für gesamtPunkte
+const gesamtPunkte = computed(() => {
+  return trainingseinheiten.value.reduce((sum, training) => sum + training.punkte, 0);
+});
 </script>
 
 <style scoped>
-.input-container, .container {
+.input-container,
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -154,26 +187,34 @@ const submitUserData = async () => {
 
 /* Star Wars-Theme Anpassungen */
 :root {
-    --ion-color-primary: #000; /* Schwarz */
-    --ion-color-secondary: #ffe81f; /* Gold */
-    --ion-color-tertiary: #d0d0d0; /* Grau */
+  --ion-color-primary: #000;
+  /* Schwarz */
+  --ion-color-secondary: #ffe81f;
+  /* Gold */
+  --ion-color-tertiary: #d0d0d0;
+  /* Grau */
 }
 
-ion-title, ion-label, ion-button {
-    color: #ffe81f;
+ion-title,
+ion-label,
+ion-button {
+  color: #ffe81f;
 }
 
 ion-item[color="light"] {
-    --background: rgba(0, 0, 0, 0.8);
-    --color: #ffe81f;
-    border: 1px solid #ffe81f;
+  --background: rgba(0, 0, 0, 0.8);
+  --color: #ffe81f;
+  border: 1px solid #ffe81f;
 }
 
 .ion-header-flex {
   display: flex;
-  justify-content: center; /* Zentriert die Inhalte horizontal */
-  align-items: center; /* Zentriert die Inhalte vertikal */
-  flex-direction: column; /* Stapelt die Kinder vertikal */
-  text-align: center; /* Zentriert den Text der direkten Kinder */
-}
-</style>
+  justify-content: center;
+  /* Zentriert die Inhalte horizontal */
+  align-items: center;
+  /* Zentriert die Inhalte vertikal */
+  flex-direction: column;
+  /* Stapelt die Kinder vertikal */
+  text-align: center;
+  /* Zentriert den Text der direkten Kinder */
+}</style>
