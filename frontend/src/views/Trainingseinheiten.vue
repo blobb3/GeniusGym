@@ -1,49 +1,53 @@
 <template>
-    <ion-page class="ion-padding">
-        <ion-header class="ion-header-flex">
-            <TheFooter />
-            <ion-toolbar>
-                <ion-title class="ion-padding">Trainingseinheiten</ion-title>
-                <p class="ion-padding">{{ dailyQuote }}</p>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding" :fullscreen="true">
-            <!-- Farbige Container für die Trainingseinheiten -->
-            
-            <ion-card @click="navigateToOberkoerper" color="primary" class="ion-padding">
-                <ion-card-content>Oberkörpertraining</ion-card-content>
-            </ion-card>
-            <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
-                <ion-card-content>Unterkörpertraining</ion-card-content>
-            </ion-card>
-            <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
-            <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
-                <ion-card-content>Running</ion-card-content>
-            </ion-card>
-            <!-- Anzeige der Punkte für Ober- und Unterkörper -->
-            <div class="ion-padding">
-                Punkte Oberkörper: {{ oberkoerperPunkte }}
-            </div>
-            <div class="ion-padding">
-                Punkte Unterkörper: {{ unterkoerperPunkte }}
-            </div>
-            <!-- Button 'Für heute Fertig' -->
-            <transition name="fade" mode="out-in">
-            <ion-button size="small">Training abschließen</ion-button></transition>
-        </ion-content>
-    </ion-page>
+  <ion-page class="ion-padding">
+    <ion-header class="ion-header-flex">
+      <TheFooter />
+      <ion-toolbar>
+        <ion-title class="ion-padding">Trainingseinheiten</ion-title>
+        <p class="ion-padding">{{ dailyQuote }}</p>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding" :fullscreen="true">
+      <!-- Farbige Container für die Trainingseinheiten -->
+
+      <ion-card @click="navigateToOberkoerper" color="primary" class="ion-padding">
+        <ion-card-content>Oberkörpertraining</ion-card-content>
+      </ion-card>
+      <ion-card @click="navigateToUnterkoerper" color="secondary" class="ion-padding">
+        <ion-card-content>Unterkörpertraining</ion-card-content>
+      </ion-card>
+      <!--auch möglich durch - ion-item v-bind:router-link= ""'/tabs/tab2/' + task.id"-->
+      <ion-card @click="navigateToRunningMap" color="tertiary" class="ion-padding">
+        <ion-card-content>Running</ion-card-content>
+      </ion-card>
+      <!-- Anzeige der Punkte für Ober- und Unterkörper -->
+      <div class="ion-padding">
+        Punkte Oberkörper: {{ oberkoerperPunkte }}
+      </div>
+      <div class="ion-padding">
+        Punkte Unterkörper: {{ unterkoerperPunkte }}
+      </div>
+      <div class="ion-padding">
+        Gesamtpunkte: {{ gesamtPunkte }}
+      </div>
+      <!-- Button 'Für heute Fertig' -->
+      <transition name="fade" mode="out-in">
+        <ion-button size="small">Training abschließen</ion-button>
+      </transition>
+    </ion-content>
+  </ion-page>
 </template>
   
 <script setup lang="ts">
 import {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonCard,
-    IonCardContent,
-    IonButton,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardContent,
+  IonButton,
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { useDailyQuote } from '@/composables/useDailyQuote';
@@ -51,6 +55,7 @@ import { useState } from '@/store'; // useState anstatt useMethods
 import TheFooter from '@/components/TheFooter.vue';
 import { useStore } from '@/store';
 import { watch } from 'vue';
+import { computed } from 'vue';
 
 const { dailyQuote } = useDailyQuote();
 const { oberkoerperPunkte, unterkoerperPunkte } = useState(); // useState verwenden, um auf den globalen Zustand zuzugreifen
@@ -60,19 +65,19 @@ const router = useRouter()
 
 // Funktion zum Navigieren zur Oberkoerper.vue-Seite
 const navigateToOberkoerper = () => {
-    console.log("Navigiere zu Oberkoerper.vue");
-    router.push('/tabs/oberkoerper');
+  console.log("Navigiere zu Oberkoerper.vue");
+  router.push('/tabs/oberkoerper');
 };
 
 // Funktion zum Navigieren zur Unterkoerper.vue-Seite
 const navigateToUnterkoerper = () => {
   console.log("Navigiere zu Unterkoerper.vue");
-    router.push('/tabs/unterkoerper');
+  router.push('/tabs/unterkoerper');
 };
 // Funktion zum Navigieren zur RunningMap.vue-Seite
 const navigateToRunningMap = () => {
   console.log("Navigiere zu RunningMap.vue");
-    router.push('/tabs/runningmap');
+  router.push('/tabs/runningmap');
 };
 
 // Beobachten der Zustände
@@ -84,58 +89,63 @@ watch(unterkoerperPunkte, (neu, alt) => {
   console.log(`Unterkörperpunkte geändert: alt=${alt}, neu=${neu}`);
 });
 
-
+//Erstellen einer reaktiven Referenz für die Gesamtpunktzahl
+const gesamtPunkte = computed(() => oberkoerperPunkte.value + unterkoerperPunkte.value);
 
 </script>
 
 <style scoped>
 /* Star Wars-Theme Farben */
 :root {
-    --ion-color-primary: #000;
-    /* Schwarz für den Hintergrund */
-    --ion-color-secondary: #ffe81f;
-    /* Gold für wichtige Elemente */
-    --ion-color-tertiary: #d0d0d0;
-    /* Grau für Nebenelemente */
+  --ion-color-primary: #000;
+  /* Schwarz für den Hintergrund */
+  --ion-color-secondary: #ffe81f;
+  /* Gold für wichtige Elemente */
+  --ion-color-tertiary: #d0d0d0;
+  /* Grau für Nebenelemente */
 }
 
 /* Anpassungen für Buttons und Cards */
 ion-card {
-    background: rgba(0, 0, 0, 0.8);
-    color: #ffe81f;
-    border: 1px solid #ffe81f;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffe81f;
+  border: 1px solid #ffe81f;
 }
 
 ion-button {
-    --background: #000;
-    --color: #ffe81f;
-    border: 1px solid #ffe81f;
-    transition: transform 0.3s ease;
+  --background: #000;
+  --color: #ffe81f;
+  border: 1px solid #ffe81f;
+  transition: transform 0.3s ease;
 }
 
 ion-button:active {
   transform: scale(0.96);
-} 
+}
 
 ion-title,
 ion-card-content {
-    color: #ffe81f;
+  color: #ffe81f;
 }
 
 p {
-    color: #d0d0d0;
+  color: #d0d0d0;
 }
 
 .ion-header-flex {
   display: flex;
-  justify-content: center; /* Zentriert die Inhalte horizontal */
-  align-items: center; /* Zentriert die Inhalte vertikal */
-  flex-direction: column; /* Stapelt die Kinder vertikal */
-  text-align: center; /* Zentriert den Text der direkten Kinder */
+  justify-content: center;
+  /* Zentriert die Inhalte horizontal */
+  align-items: center;
+  /* Zentriert die Inhalte vertikal */
+  flex-direction: column;
+  /* Stapelt die Kinder vertikal */
+  text-align: center;
+  /* Zentriert den Text der direkten Kinder */
 }
 
 ion-header {
-  --background: #000; 
+  --background: #000;
 }
 
 
@@ -145,6 +155,7 @@ ion-header {
     transform: scale(0.95);
     opacity: 0.6;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -164,11 +175,15 @@ ion-card:focus-within {
 /* Fügen Sie diesen Code zu Ihrem <style> hininzu */
 
 /* Vue-Übergänge */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0;
-}
 
-</style> 
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active in <2.1.8 */
+  {
+  opacity: 0;
+}</style> 
