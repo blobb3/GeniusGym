@@ -195,9 +195,12 @@ ion-content {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 16px;
-  box-sizing: border-box; /* Verhindert, dass Padding die Breite beeinflusst */
+  padding: 1px;
+  box-sizing: border-box;
+  max-width: 600px;
+  margin: auto;
 }
+
 
 /* Basis Animation für Karten */
 @keyframes popIn {
@@ -240,12 +243,12 @@ ion-card:focus-within {
 /* Media Queries für Responsive Design */
 @media (min-width: 768px) {
   ion-content {
-    max-width: 600px; /* Begrenzt die Breite für größere Bildschirme */
-    margin: auto; /* Zentriert den Inhaltsbereich horizontal */
+    max-width: 100vw; /* Begrenzt die Breite für größere Bildschirme */
+    margin: 0 auto; /* Zentriert den Inhaltsbereich horizontal */
   }
 
   ion-card {
-    max-width: 80%; /* Karten sind auf größeren Bildschirmen schmaler */
+    max-width: 100%; /* Karten sind auf größeren Bildschirmen schmaler */
   }
 
   .points-container {

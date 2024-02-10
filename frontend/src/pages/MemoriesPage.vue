@@ -1,8 +1,8 @@
 <template>
   <ion-page >
     <ion-header class="ion-header-flex">
-        <TheFooter />
       <ion-toolbar>
+        <TheFooter />
         <ion-title class="ion-padding">All Gym-Memories</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="goToAddMemoryPage" aria-label="Add Memory">
@@ -22,7 +22,6 @@
     </ion-content>
   </ion-page>
 </template>
-
 
 <script setup lang="ts">
 import {
@@ -100,5 +99,20 @@ ion-item {
   align-items: center; /* Zentriert die Inhalte vertikal */
   flex-direction: column; /* Stapelt die Kinder vertikal */
   text-align: center; /* Zentriert den Text der direkten Kinder */
+}
+
+/* Media Query für Responsive Design */
+@media (min-width: 768px) {
+  .ion-header-flex {
+    flex-direction: row; /* Ändert die Richtung auf horizontal für größere Bildschirme */
+  }
+
+  .ion-header-flex ion-title {
+    margin-right: auto; /* Verschiebt den Titel ganz nach links für größere Bildschirme */
+  }
+
+  .ion-header-flex ion-buttons {
+    margin-left: auto; /* Verschiebt die Schaltflächen ganz nach rechts für größere Bildschirme */
+  }
 }
 </style>
