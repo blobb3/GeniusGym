@@ -1,5 +1,6 @@
 package ch.zhaw.sml.iwi.meng.leantodo.entity;
 
+// kann verschiedene Fitnesslevel repräsentieren und zuweisen
 public enum Level {
     ANFAENGER("Anfänger"),
     SPORTLER("Sportler"),

@@ -19,6 +19,7 @@ public class StatusController {
     @Autowired
     private StatusRepository statusRepository;
 
+    // Status anhand von ID finden
     @SuppressWarnings("null")
     @GetMapping("/{id}")
     public ResponseEntity<StatusDTO> getStatus(@PathVariable Long id) {

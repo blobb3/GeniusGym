@@ -15,6 +15,7 @@ interface Methods {
   addPointsToUnterkoerper: (points: number) => void;
 }
 
+// Methode zur Zustandsmanipulation (können Punkte hinzufügen, indem sie den reatkiven zustand manipulieren)
 const methods: Methods = {
   addPointsToOberkoerper(points: number) {
     state.oberkoerperPunkte += points;
@@ -24,11 +25,13 @@ const methods: Methods = {
   }
 };
 
+// stellt Zustand/Methoden für andere Kompontenten bereit
 export function useStore() {
   provide('state', readonly(state));
   provide('methods', methods);
 }
 
+// Zugriff auf den Zustand/Methoden 
 export function useState() {
   const state = inject<State>('state');
   if (!state) throw new Error('useState must be used within useStore');

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+// Implementierung des Interfaces (geschäftslogik, durch repository)
 @Service
 public class TrainingseinheitServiceImpl implements TrainingseinheitService {
 
@@ -16,7 +17,6 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
 
     @Override
     public Trainingseinheit addTrainingseinheit(Trainingseinheit trainingseinheit) {
-        // Punkte setzen
         trainingseinheit.setPunkte(berechnePunkteFuerUebung(trainingseinheit));
         return trainingseinheitRepository.save(trainingseinheit);
     }

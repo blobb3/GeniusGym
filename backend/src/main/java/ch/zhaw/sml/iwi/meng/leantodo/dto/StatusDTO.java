@@ -8,12 +8,16 @@ import lombok.Setter;
 @Getter
 @Setter
 
+// Benutzerdaten kapseln und übertragen
 public class StatusDTO {
-    public StatusDTO(String name2, Integer groesse2, Integer gewicht2) {
-        //TODO Auto-generated constructor stub
-    }
+   
     private String name;
     private Integer groesse;
     private Integer gewicht;
-    
+
+    public StatusDTO(String name, Integer groesse, Integer gewicht) {
+        this.name = name;
+        this.groesse = groesse;
+        this.gewicht = gewicht;
+    } 
 }

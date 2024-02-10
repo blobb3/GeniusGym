@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Interface, das Operationen mit Trainingseinheiten handhabt
+// dient als Abstraktionsebene
 @Service
 public interface TrainingseinheitService {
     Trainingseinheit addTrainingseinheit(Trainingseinheit trainingseinheit);

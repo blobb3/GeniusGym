@@ -20,6 +20,7 @@ public class StatusEndpoint {
     @Autowired
     private StatusRepository statusRepository;
 
+    // Speichert Status-Objekt - zuerst wird Level von Bneutzers berechnet
     @PostMapping
     public Status saveOrUpdateStatus(@RequestBody Status status) {
         if (status.getPunkte() != null) {
@@ -29,6 +30,7 @@ public class StatusEndpoint {
         return statusRepository.save(status);
     }
     
+    // Status-Objekt nach ID aufrufen
     @SuppressWarnings("null")
     @GetMapping("/{id}")
     public Status getStatus(@PathVariable Long id) {
