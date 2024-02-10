@@ -8,6 +8,9 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
+      <div class="info-box">
+      <p>Erfasse jetzt dein <b>Gewicht</b> und <b>Grösse</b>, um eine besser Auswertung im Dashboard zu erhalten.</p>
+    </div>
       <!-- Inputfelder für Nutzerdaten und Button zur Speicherung -->
       <div class="input-container">
         <ion-item>
@@ -207,4 +210,51 @@ ion-item[color="light"] {
   /* Stapelt die Kinder vertikal */
   text-align: center;
   /* Zentriert den Text der direkten Kinder */
-}</style>
+}
+
+.testbutton {
+  /* Bestehende Stile */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.testbutton:hover {
+  background-color: #ffe81f; /* Farbwechsel beim Hover */
+  color: #000;
+  transform: translateY(-2px); /* Kleine Bewegung nach oben */
+}
+
+.testbutton:active {
+  animation: pulse 0.4s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Stile für das Informationsfeld */
+.info-box {
+  background-color: #f4e989; /* Hervorhebungsfarbe, passe sie nach Bedarf an */
+  color: #000; /* Textfarbe */
+  text-align: center; /* Zentriert den Text */
+  padding: 10px; /* Innenabstand */
+  margin: 20px 0; /* Außenabstand oben und unten */
+  border-radius: 5px; /* Abgerundete Ecken */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatten für einen 3D-Effekt */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .info-box {
+    margin: 10px; /* Kleinere Außenabstände auf mobilen Geräten */
+    padding: 5px; /* Kleinerer Innenabstand auf mobilen Geräten */
+  }
+}
+</style>
