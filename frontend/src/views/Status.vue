@@ -31,25 +31,25 @@
             <ion-card-title class="card-title ion-padding">Sei eins mit der Fitness, der Sweat ist mit
               dir!</ion-card-title>
           </ion-card-header>
-          <ion-card-content class="ion-text-center">
+          <ion-card-content >
             <ion-avatar class="custom-avatar">
               <ion-icon :icon="person" size="large"></ion-icon>
             </ion-avatar>
             <ion-list lines="none">
-              <ion-item class="ion-padding">
+              <ion-item>
                 <ion-label>Name: {{ userData.name }}</ion-label>
               </ion-item>
-              <ion-item class="ion-padding">
+              <ion-item >
                 <ion-label>Level: {{ userData.level }}</ion-label>
               </ion-item>
-              <ion-item class="ion-padding">
+              <ion-item >
                 <ion-label>Punktestand: {{ gesamtPunkte }}</ion-label>
               </ion-item>
 
               <ion-item>
-                <ion-label class="ion-padding">Grösse: {{ userData.groesse }} cm</ion-label>
+                <ion-label >Grösse: {{ userData.groesse }} cm</ion-label>
               </ion-item>
-              <ion-item class="ion-padding">
+              <ion-item >
                 <ion-label>Gewicht: {{ userData.gewicht }} kg</ion-label>
               </ion-item>
             </ion-list>

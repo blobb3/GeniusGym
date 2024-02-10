@@ -139,6 +139,12 @@ const submitTrainingData = async () => {
   /* Grau für Nebenelemente */
 }
 
+body, ion-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
 /* Anpassungen für Buttons und Cards */
 ion-card {
   background: rgba(0, 0, 0, 0.8);
@@ -182,6 +188,16 @@ ion-header {
   --background: #000;
 }
 
+/* Inhaltsbereich */
+ion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box; /* Verhindert, dass Padding die Breite beeinflusst */
+}
 
 /* Basis Animation für Karten */
 @keyframes popIn {
@@ -220,4 +236,22 @@ ion-card:focus-within {
 /* .fade-leave-active in <2.1.8 */
   {
   opacity: 0;
-}</style> 
+}
+/* Media Queries für Responsive Design */
+@media (min-width: 768px) {
+  ion-content {
+    max-width: 600px; /* Begrenzt die Breite für größere Bildschirme */
+    margin: auto; /* Zentriert den Inhaltsbereich horizontal */
+  }
+
+  ion-card {
+    max-width: 80%; /* Karten sind auf größeren Bildschirmen schmaler */
+  }
+
+  .points-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+</style> 
+

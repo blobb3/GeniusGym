@@ -145,4 +145,33 @@ ion-item {
 .action-buttons ion-button {
   animation: pulse 1.5s infinite;
 }
+
+/* Fixierter Header mit höherem Z-Index */
+ion-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; /* Stellen Sie sicher, dass der Header über anderen Elementen liegt */
+  background-color:black; /* Schwarzer Hintergrund */
+}
+
+/* Abstand für den Content, damit dieser nicht unter dem Header beginnt */
+.ion-content {
+  padding-top: 56px; /* Höhe des Headers */
+}
+
+/* Header-Inhalte */
+.ion-header-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.ion-header-flex {
+  padding: 1rem 0; /* Etwas Raum oben und unten */
+}
+
 </style>
