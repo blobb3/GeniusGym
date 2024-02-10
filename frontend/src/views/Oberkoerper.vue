@@ -63,7 +63,7 @@ const exercises = ref<Exercise[]>([
         description: 'Stärkt Brust, Schultern und Trizeps. 2 Sätze von je 10-15 Wiederholungen.',
         imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/liegestuetze_muskelaufbau-liegestuetze_klassisch.gif',
         completed: false,
-        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+        punkte: 10 
     },
     {
         id: 'pullups',
@@ -71,7 +71,7 @@ const exercises = ref<Exercise[]>([
         description: 'Zielt auf die Rückenmuskulatur und den Bizeps. 2 Sätze von 8-12 Wiederholungen.',
         imageUrl: 'https://homeworkouts.org/wp-content/uploads/anim-rear-pull-ups.gif',
         completed: false,
-        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+        punkte: 10 
     },
     {
         id: 'shoulderPress',
@@ -79,7 +79,7 @@ const exercises = ref<Exercise[]>([
         description: 'Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.',
         imageUrl: 'https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif',
         completed: false,
-        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+        punkte: 10 
     },
 ]);
 
@@ -87,11 +87,14 @@ const exercises = ref<Exercise[]>([
 const collectedPoints = ref(0);
 
 // Diese Funktion sollte innerhalb des `setup`-Blocks definiert sein.
+const { addPointsToOberkoerper } = useMethods();
+
 const completeExercise = (index: number) => {
     const exercise = exercises.value[index];
     if (!exercise.completed) {
         collectedPoints.value += exercise.punkte; // Punkte zur gesammelten Punktzahl hinzufügen
         exercise.completed = true;
+        addPointsToOberkoerper(exercise.punkte); 
     }
 };
 

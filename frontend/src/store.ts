@@ -1,4 +1,4 @@
-import { reactive, readonly, provide, inject } from 'vue';
+import { reactive, readonly, provide, inject, computed } from 'vue';
 
 export interface State {
   oberkoerperPunkte: number;
@@ -32,7 +32,13 @@ export function useStore() {
 export function useState() {
   const state = inject<State>('state');
   if (!state) throw new Error('useState must be used within useStore');
-  return state;
+  
+  // Erstellen von reaktiven Referenzen für jeden Zustand
+  const oberkoerperPunkte = computed(() => state.oberkoerperPunkte);
+  const unterkoerperPunkte = computed(() => state.unterkoerperPunkte);
+
+  // Rückgabe der reaktiven Referenzen
+  return { oberkoerperPunkte, unterkoerperPunkte };
 }
 
 export function useMethods() {

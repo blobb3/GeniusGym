@@ -49,25 +49,42 @@ import { useRouter } from 'vue-router';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 import { useState } from '@/store'; // useState anstatt useMethods
 import TheFooter from '@/components/TheFooter.vue';
+import { useStore } from '@/store';
+import { watch } from 'vue';
 
 const { dailyQuote } = useDailyQuote();
 const { oberkoerperPunkte, unterkoerperPunkte } = useState(); // useState verwenden, um auf den globalen Zustand zuzugreifen
 
+const store = useStore();
 const router = useRouter()
 
 // Funktion zum Navigieren zur Oberkoerper.vue-Seite
 const navigateToOberkoerper = () => {
+    console.log("Navigiere zu Oberkoerper.vue");
     router.push('/tabs/oberkoerper');
 };
 
 // Funktion zum Navigieren zur Unterkoerper.vue-Seite
 const navigateToUnterkoerper = () => {
+  console.log("Navigiere zu Unterkoerper.vue");
     router.push('/tabs/unterkoerper');
 };
 // Funktion zum Navigieren zur RunningMap.vue-Seite
 const navigateToRunningMap = () => {
+  console.log("Navigiere zu RunningMap.vue");
     router.push('/tabs/runningmap');
 };
+
+// Beobachten der Zustände
+watch(oberkoerperPunkte, (neu, alt) => {
+  console.log(`Oberkörperpunkte geändert: alt=${alt}, neu=${neu}`);
+});
+
+watch(unterkoerperPunkte, (neu, alt) => {
+  console.log(`Unterkörperpunkte geändert: alt=${alt}, neu=${neu}`);
+});
+
+
 
 </script>
 

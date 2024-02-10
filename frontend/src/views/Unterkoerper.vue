@@ -36,11 +36,15 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonButtons, IonBackButton, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
+import {
+    IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion,
+    IonItem, IonLabel, IonButtons, IonBackButton, IonButton
+} from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
+import { useMethods } from '@/store'; 
+
 const { dailyQuote } = useDailyQuote();
-import { useMethods } from '@/store';
 
 interface Exercise {
     id: string;
@@ -48,50 +52,90 @@ interface Exercise {
     description: string;
     imageUrl?: string;
     completed: boolean;
+    punkte: number; 
 }
 
-// Initialisiere die Übungen mit dem Status 'completed' als false
+
+// Übungen mit dem Status 'completed' als false
 const exercises = ref<Exercise[]>([
-    { id: 'squat', name: 'Kniebeugen', description: 'Stärkt Beine und Gesäss. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kniebeugen_muskeln-breite_kniebeugen_langhantel.gif', completed: false },
-    { id: 'lunges', name: 'Ausfallschritte', description: 'Trainiert Beine und Gesäss. Fördert die Stabilität. 3 Sätze von 10-12 Wiederholungen pro Bein.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2017/11/kurzhantel_ausfallschritte_nach_hinten.gif',completed: false },
-    { id: 'deadlifts', name: 'Kreuzheben', description: 'Stärkt die hintere Beinmuskulatur und den unteren Rücken. 3 Sätze von 8-10 Wiederholungen.', imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kreuzheben_muskelgruppen-kreuzheben_mit_langhantel.gif', completed: false },
-    { id: 'legpress', name: 'Beinpresse', description: 'Zielt auf Oberschenkel und Gesässmuskulatur. 3 Sätze von 10-15 Wiederholungen.', imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beinpresse_muskeln-45_grad_beinpresse.gif' ,completed: false },
-    { id: 'calfRaises', name: 'Wadenheben', description: 'Isoliertes Training der Waden. 3 Sätze von 15-20 Wiederholungen.', imageUrl: 'https://modusx.de/wp-content/uploads/wadenheben-stehend-mit-eigenem-koerpergewicht.gif', completed: false },
-    { id: 'hamstringCurls', name: 'Bein-Curls', description: 'Kräftigt die Beinrückseite. 3 Sätze von 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beincurls_liegend.gif',completed: false },
-    { id: 'stepUps', name: 'Step-Ups', description: 'Verbessert Kraft und Balance. 3 Sätze von 10 Wiederholungen pro Bein.', imageUrl: 'https://modusx.de/wp-content/uploads/side-step-ups.gif',completed: false },
+    {
+        id: 'squat', 
+        name: 'Kniebeugen', 
+        description: 'Stärkt Beine und Gesäss. 2 Sätze von je 10-15 Wiederholungen.', 
+        imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kniebeugen_muskeln-breite_kniebeugen_langhantel.gif', 
+        completed: false,
+        punkte: 5, 
+    },
+    {
+        id: 'lunges', 
+        name: 'Ausfallschritte', 
+        description: 'Trainiert Beine und Gesäss. Fördert die Stabilität. 3 Sätze von 10-12 Wiederholungen pro Bein.', 
+        imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2017/11/kurzhantel_ausfallschritte_nach_hinten.gif',
+        completed: false,
+        punkte: 5,
+    },
+    {
+        id: 'deadlifts', 
+        name: 'Kreuzheben', 
+        description: 'Stärkt die hintere Beinmuskulatur und den unteren Rücken. 3 Sätze von 8-10 Wiederholungen.', 
+        imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/01/kreuzheben_muskelgruppen-kreuzheben_mit_langhantel.gif', 
+        completed: false,
+        punkte: 5,
+    },
+    {
+        id: 'legpress', 
+        name: 'Beinpresse', 
+        description: 'Zielt auf Oberschenkel und Gesässmuskulatur. 3 Sätze von 10-15 Wiederholungen.', 
+        imageUrl:'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beinpresse_muskeln-45_grad_beinpresse.gif',
+        completed: false,
+        punkte: 5,
+    },
+    {
+        id: 'calfRaises', 
+        name: 'Wadenheben', 
+        description: 'Isoliertes Training der Waden. 3 Sätze von 15-20 Wiederholungen.', 
+        imageUrl: 'https://modusx.de/wp-content/uploads/wadenheben-stehend-mit-eigenem-koerpergewicht.gif', 
+        completed: false,
+        punkte: 5, 
+    },
+    {
+        id: 'hamstringCurls', 
+        name: 'Bein-Curls', 
+        description: 'Kräftigt die Beinrückseite. 3 Sätze von 10-15 Wiederholungen.', 
+        imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/beincurls_liegend.gif',
+        completed: false,
+        punkte: 5,
+    },
+    {
+        id: 'stepUps', 
+        name: 'Step-Ups', 
+        description: 'Verbessert Kraft und Balance. 3 Sätze von 10 Wiederholungen pro Bein.', 
+        imageUrl: 'https://modusx.de/wp-content/uploads/side-step-ups.gif',
+        completed: false,
+        punkte: 5,
+    },
 ]);
 
 const collectedPoints = ref(0);
 
+// addPointsToUnterkoerper Methode aus dem Store, um Punkte hinzuzufügen
+const { addPointsToUnterkoerper } = useMethods();
 
-const { addPointsToUnterkoerper } = useMethods(); // Verwende dies für Unterkoerper.vue
-// Methode zum Abschliessen einer Übung und Hinzufügen von Punkten
 const completeExercise = (index: number) => {
-    if (!exercises.value[index].completed) {
-        collectedPoints.value += 5;
-        exercises.value[index].completed = true;
-        addPointsToUnterkoerper(5); 
+    const exercise = exercises.value[index];
+    console.log(`Übung vorher:`, exercise);
+    if (!exercise.completed) {
+        collectedPoints.value += exercise.punkte;
+        console.log(`Hinzugefügte Punkte:`, exercise.punkte);
+        exercise.completed = true;
+        addPointsToUnterkoerper(exercise.punkte);
+        console.log(`Nach dem Hinzufügen der Punkte:`, collectedPoints.value); 
+    } else {
+        console.log(`Übung bereits abgeschlossen.`);
     }
 }
-
-/*
-const globalState = inject('globalState');
-
-const completeExercise = (index: number) => {
-  if (!exercises.value[index].completed) {
-    const pointsToAdd = 5;
-    collectedPoints.value += pointsToAdd;
-    exercises.value[index].completed = true;
-    // Hier aktualisieren Sie den globalen Zustand je nach Komponente
-    if () {
-        globalState.oberkoerperPunkte += pointsToAdd;
-    } else {
-      globalState.unterkoerperPunkte += pointsToAdd;
-    }
-  }
-};
-*/
 </script>
+
 
 <style scoped>
 .completed-button {
