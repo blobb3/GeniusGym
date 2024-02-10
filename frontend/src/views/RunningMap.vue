@@ -11,7 +11,7 @@
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
 
-      <div id="map_canvas" style="height: 400px; width: 100%;"></div>
+      <div id="map_canvas" style="height: 350px; width: 100%;"></div>
 
 
       <div class="timer-buttons">
@@ -33,9 +33,9 @@
       </ion-item>
 
 
-      <ion-button @click="createRoute">Create Route</ion-button>
-      <ion-button @click="resetMap">Reset Map</ion-button>
-      <ion-button @click="saveRoute">Save Route</ion-button>
+      <ion-button class="bestbutton" @click="createRoute">Create Route</ion-button>
+      <ion-button class="bestbutton" @click="resetMap">Reset Map</ion-button>
+      <ion-button class="bestbutton" @click="saveRoute">Save Route</ion-button>
 
     </ion-content>
   </ion-page>
@@ -236,12 +236,11 @@ const saveRoute = async () => {
 .timer-buttons {
   display: flex;
   justify-content: space-around;
-  margin: 16px 0;
+  margin: 16px 0 8px 0;
 }
 
 .timer-display {
   text-align: center;
-  margin-top: 8px;
   margin-bottom: 8px;
   color: #ffe81f;
 }
@@ -275,18 +274,10 @@ ion-button {
   color: #ffe81f;
 }
 
-.completed-button {
-  --background: green;
-}
-
-ion-item[color="light"] {
-  --background: rgba(0, 0, 0, 0.8);
-  --color: #ffe81f;
-  border: 1px solid #ffe81f;
-}
-
-.completed-button {
-  --background: green;
+.bestbutton {
+  display: flex;
+  justify-content: left;
+  width: 40%;
+  margin-top: 15px;
 }
 </style>
-  

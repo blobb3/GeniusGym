@@ -5,11 +5,11 @@
         <ion-toolbar>
           <ion-title>Dashboard</ion-title>
         </ion-toolbar>
-        <p>{{ dailyQuote }}</p>
+        <p style="margin-bottom: 50px;">{{ dailyQuote }}</p>
         <div class="centered-container">
           <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
         </div>
-        <div class="centered-container" id="chart_div"></div>
+        <div ref="chartDiv" id="chartDiv" class="centered-container"></div>
       </div>
     </ion-content>
   </ion-page>
@@ -18,67 +18,85 @@
 <script setup lang="ts">
 import { IonPage, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const { dailyQuote } = useDailyQuote();
 
+// Funktion direkt im <script setup> definieren
 const isWeekday = (dateString: string) => {
   const date = new Date(dateString);
   const utcDay = date.getUTCDay();
   return utcDay !== 0 && utcDay !== 6;
 };
 
+const chartDiv = ref(null);
+
 onMounted(() => {
-  google.charts.load('current', { packages: ['corechart', 'line'] });
-  google.charts.setOnLoadCallback(() => {
-    drawChart();
-  });
-
-  function drawChart() {
-    const chartDiv = document.getElementById('chart_div');
-    if (!chartDiv) {
-      console.error('Das Diagramm-Element wurde nicht gefunden.');
-      return;
-    }
-
-    const data = new google.visualization.DataTable();
-    data.addColumn('string', 'Datum');
-    data.addColumn('number', 'Kilometer');
-
-    data.addRows([
-      ['1. Jan', 10],
-      ['1. Feb', 8.5],
-      ['1. Mär', 17.25],
-      ['1. Apr', 14.3],
-      // ...weitere Datenpunkte...
-    ]);
-
-    const options = {
-      title: 'Dein Fitness-Fortschritt',
-      curveType: 'function',
-      legend: { position: 'bottom' },
-      hAxis: {
-        title: 'Datum',
-        titleTextStyle: { color: '#333' },
-        slantedText: true,
-        slantedTextAngle: 45,
-      },
-      vAxis: {
-        title: 'Kilometer',
-        gridlines: {
-          color: '#e9e9e9',
-          count: 4,
-        },
-        minValue: 0,
-      },
-      pointSize: 5,
-      colors: ['#blue'],
-    };
-
-    const chart = new google.visualization.LineChart(chartDiv);
-    chart.draw(data, options);
+  if (chartDiv.value) {
+    google.charts.load('current', { packages: ['corechart', 'line'] });
+    google.charts.setOnLoadCallback(drawChart);
   }
 });
+
+function drawChart() {
+  if (!chartDiv.value) {
+    console.error('Das Diagramm-Element wurde nicht gefunden.');
+    return;
+  }
+
+  const data = new google.visualization.DataTable();
+  data.addColumn('string', 'Datum');
+  data.addColumn('number', 'Kilometer');
+
+  data.addRows([
+    ['12. Jan', 10],
+    ['27. Jan', 8.5],
+    ['30. Jan', 17.25],
+    ['5. Feb', 8.25],
+    ['14. Feb', 10.12],
+    ['18. Feb', 16.35],
+    ['9. Mär', 17.45],
+    ['16. Mär', 22.23],
+    ['23. Apr', 10.75],
+    ['27. Apr', 7.64],
+  ]);
+
+  const options: google.visualization.LineChartOptions = {
+    title: 'Dein Fitness-Fortschritt',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    hAxis: {
+      title: 'Datum',
+      slantedText: true, // Wenn die Datenbeschriftungen schräg angezeigt werden sollen
+      slantedTextAngle: 45 // Winkel der Schräge
+    },
+    vAxis: {
+      title: 'Kilometer',
+      minValue: 0, // Minimale Grenze der vertikalen Achse
+      maxValue: 40, // Maximale Grenze der vertikalen Achse, falls gewünscht
+      gridlines: {
+        count: 11, // Dies erzeugt Linien für jeden 5er-Intervall bis 50
+      },
+      // Optional: Kleinere Gitterlinien für noch feinere Intervalle
+      minorGridlines: {
+        count: 4, // Dies würde zwischen den Hauptgitterlinien kleinere hinzufügen
+      },
+      format: '0', // Optional: Keine Dezimalstellen anzeigen
+    },
+    colors: ['#1c91c0'], // Farbe der Linie, passend zu deinem Bild
+    pointSize: 5,
+    chartArea: {
+      left: '10%',
+      top: '10%',
+      width: '80%',
+      height: '40%' // Evtl. die Höhe anpassen für eine bessere Darstellung
+    },
+  };
+
+
+  const chart = new google.visualization.LineChart(chartDiv.value);
+  chart.draw(data, options);
+}
 </script>
 
 <style>
@@ -97,7 +115,7 @@ onMounted(() => {
 #chart_div {
   width: 100%;
   height: 400px;
-  /* Größere Höhe für bessere Darstellung */
+  /* Angepasste Höhe für Gitterlinien */
 }
 
 .centered-content>* {
@@ -111,7 +129,8 @@ onMounted(() => {
   margin-bottom: 50px;
 }
 
-ion-title {
-  text-align: center;
+#chartDiv {
+  width: 100%;
+  height: 200px;
 }
 </style>
