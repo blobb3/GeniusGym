@@ -94,8 +94,6 @@ watch(unterkoerperPunkte, (neu, alt) => {
 const gesamtPunkte = computed(() => oberkoerperPunkte.value + unterkoerperPunkte.value);
 
 // Backend-Teil (erstmal Punkte in Datenbank hochladen)
-
-// Backend-Teil (Punkte in Datenbank hochladen)
 const submitTrainingData = async () => {
   try {
     const token = localStorage.getItem('token');

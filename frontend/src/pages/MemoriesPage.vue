@@ -13,7 +13,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-list>
+      <ion-list :inset="true">
         <ion-item v-for="memory in memories" :key="memory.id" @click="viewMemoryDetails(memory.id)">
           {{ memory.title }}
           <ion-icon :icon="trashIcon" slot="end" @click.stop="deleteMemory(memory.id)" aria-label="Delete Memory"></ion-icon>
