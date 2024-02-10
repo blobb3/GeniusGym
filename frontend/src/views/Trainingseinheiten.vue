@@ -94,8 +94,6 @@ watch(unterkoerperPunkte, (neu, alt) => {
 const gesamtPunkte = computed(() => oberkoerperPunkte.value + unterkoerperPunkte.value);
 
 // Backend-Teil (erstmal Punkte in Datenbank hochladen)
-
-// Backend-Teil (Punkte in Datenbank hochladen)
 const submitTrainingData = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -137,6 +135,12 @@ const submitTrainingData = async () => {
   /* Gold für wichtige Elemente */
   --ion-color-tertiary: #d0d0d0;
   /* Grau für Nebenelemente */
+}
+
+body, ion-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
 }
 
 /* Anpassungen für Buttons und Cards */
@@ -182,6 +186,19 @@ ion-header {
   --background: #000;
 }
 
+/* Inhaltsbereich */
+ion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1px;
+  box-sizing: border-box;
+  max-width: 600px;
+  margin: auto;
+}
+
 
 /* Basis Animation für Karten */
 @keyframes popIn {
@@ -220,4 +237,22 @@ ion-card:focus-within {
 /* .fade-leave-active in <2.1.8 */
   {
   opacity: 0;
-}</style> 
+}
+/* Media Queries für Responsive Design */
+@media (min-width: 768px) {
+  ion-content {
+    max-width: 100vw; /* Begrenzt die Breite für größere Bildschirme */
+    margin: 0 auto; /* Zentriert den Inhaltsbereich horizontal */
+  }
+
+  ion-card {
+    max-width: 100%; /* Karten sind auf größeren Bildschirmen schmaler */
+  }
+
+  .points-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+</style> 
+
