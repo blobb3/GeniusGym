@@ -37,12 +37,12 @@ public class TrainingseinheitServiceImpl implements TrainingseinheitService {
         trainingseinheitRepository.deleteById(id);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Trainingseinheit updateTrainingseinheit(Trainingseinheit trainingseinheit) {
-        // Bevor Sie aktualisieren, prüfen Sie, ob die Trainingseinheit bereits existiert
         if(trainingseinheit.getId() != null && trainingseinheitRepository.existsById(trainingseinheit.getId())) {
             return trainingseinheitRepository.save(trainingseinheit);
         }
-        return null; // oder eine angemessene Handhabung, wenn die Trainingseinheit nicht existiert
+        return null; 
     }
 }
