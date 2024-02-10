@@ -96,8 +96,11 @@ const gesamtPunkte = computed(() => oberkoerperPunkte.value + unterkoerperPunkte
 // Backend-Teil (erstmal Punkte in Datenbank hochladen)
 const submitTrainingData = async () => {
   try {
-    const token = localStorage.getItem('token');
-    
+    // Basic Auth Credentials
+    const username = 'user';
+    const password = 'user';
+    const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
     // Punkte aus den globalen Zuständen abrufen
     const oberkoerperPunkteValue = oberkoerperPunkte.value;
     const unterkoerperPunkteValue = unterkoerperPunkte.value;
@@ -105,16 +108,14 @@ const submitTrainingData = async () => {
     // Daten vorbereiten
     const punkteData = {
       oberkoerperPunkte: oberkoerperPunkteValue,
-      unterkoerperPunkte: unterkoerperPunkteValue
+      unterkoerperPunkte: unterkoerperPunkteValue,
     };
-
-    console.log(`Bearer Token: ${token}`);
 
     // Daten an das Backend senden, einschließlich des Authorization-Headers
     await axios.post('http://localhost:8080/punkte', punkteData, {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': basicAuth,
+      },
     });
 
     console.log('Punkte erfolgreich gespeichert');
@@ -122,6 +123,7 @@ const submitTrainingData = async () => {
     console.error('Fehler beim Speichern der Punkte:', error);
   }
 };
+
 
 
 </script>
@@ -137,7 +139,8 @@ const submitTrainingData = async () => {
   /* Grau für Nebenelemente */
 }
 
-body, ion-page {
+body,
+ion-page {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
@@ -238,21 +241,24 @@ ion-card:focus-within {
   {
   opacity: 0;
 }
+
 /* Media Queries für Responsive Design */
 @media (min-width: 768px) {
   ion-content {
-    max-width: 100vw; /* Begrenzt die Breite für größere Bildschirme */
-    margin: 0 auto; /* Zentriert den Inhaltsbereich horizontal */
+    max-width: 100vw;
+    /* Begrenzt die Breite für größere Bildschirme */
+    margin: 0 auto;
+    /* Zentriert den Inhaltsbereich horizontal */
   }
 
   ion-card {
-    max-width: 100%; /* Karten sind auf größeren Bildschirmen schmaler */
+    max-width: 100%;
+    /* Karten sind auf größeren Bildschirmen schmaler */
   }
 
   .points-container {
     flex-direction: row;
     justify-content: space-between;
   }
-}
-</style> 
+}</style> 
 
