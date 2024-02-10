@@ -180,6 +180,7 @@ interface RouteSummary {
   destination: string;
   distance: string;
   duration: string;
+  created: string;
 }
 
 let savedRoutes = ref<RouteSummary[]>([]);
@@ -207,6 +208,7 @@ const saveRoute = async () => {
     destination: leg.end_address,
     distance: leg.distance ? leg.distance.text : 'Unbekannt',
     duration: leg.duration ? leg.duration.text : 'Unbekannt',
+    created: new Date().toISOString(), // Erfassung des aktuellen Datums
   };
 
   try {
@@ -230,6 +232,7 @@ const saveRoute = async () => {
     console.error("Fehler beim Speichern der Route:", error);
   }
 };
+
 </script>
 
 <style scoped>

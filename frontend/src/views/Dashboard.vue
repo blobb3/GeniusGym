@@ -2,16 +2,15 @@
   <ion-page>
     <ion-content class="content-center">
       <ion-header class="ion-header-flex">
-      <TheFooter />
-      <ion-toolbar>
-        <ion-title class="ion-padding">Dashboard</ion-title>
-        <p class="ion-padding">{{ dailyQuote }}</p>
-      </ion-toolbar>
-    </ion-header>
-    <br>
+        <ion-toolbar>
+          <ion-title class="ion-padding">Dashboard</ion-title>
+          <p class="ion-padding">{{ dailyQuote }}</p>
+        </ion-toolbar>
+      </ion-header>
+      <br>
       <div class="centered-content">
         <div class="centered-container">
-          <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
+          <ion-datetime></ion-datetime>
         </div>
         <div ref="chartDiv" id="chartDiv" class="centered-container"></div>
       </div>
@@ -20,32 +19,49 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import { IonPage, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
-import { ref, onMounted } from 'vue';
-import TheFooter from '@/components/TheFooter.vue';
 
 const { dailyQuote } = useDailyQuote();
-
-// Funktion direkt im <script setup> definieren
-const isWeekday = (dateString: string) => {
-  const date = new Date(dateString);
-  const utcDay = date.getUTCDay();
-  return utcDay !== 0 && utcDay !== 6;
-};
-
 const chartDiv = ref(null);
 
-onMounted(() => {
-  if (chartDiv.value) {
+// Definieren Sie den Typ für Ihre Routendaten
+interface Route {
+  origin: string;
+  destination: string;
+  distance: string;
+  duration: string;
+  created: string;
+}
+
+const routesData = ref<Route[]>([]);
+
+// Basic Auth Credentials
+const username = 'user';
+const password = 'user';
+const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
+// Funktion zum Abrufen der Routendaten vom Server
+async function fetchMaps() {
+  try {
+    const response = await axios.get<Route[]>('http://localhost:8080/api/routes', {
+      headers: { Authorization: basicAuth },
+    });
+    routesData.value = response.data;
+    console.log(response.data);
     google.charts.load('current', { packages: ['corechart', 'line'] });
     google.charts.setOnLoadCallback(drawChart);
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Routendaten:", error);
   }
-});
+}
 
+// Funktion zum Zeichnen des Diagramms mit den geladenen Daten
 function drawChart() {
-  if (!chartDiv.value) {
-    console.error('Das Diagramm-Element wurde nicht gefunden.');
+  if (!chartDiv.value || routesData.value.length === 0) {
+    console.error('Das Diagramm-Element wurde nicht gefunden oder es gibt keine Daten.');
     return;
   }
 
@@ -53,78 +69,59 @@ function drawChart() {
   data.addColumn('string', 'Datum');
   data.addColumn('number', 'Kilometer');
 
-  data.addRows([
-    ['12. Jan', 10],
-    ['27. Jan', 8.5],
-    ['30. Jan', 17.25],
-    ['5. Feb', 8.25],
-    ['14. Feb', 10.12],
-    ['18. Feb', 16.35],
-    ['9. Mär', 17.45],
-    ['16. Mär', 22.23],
-    ['23. Apr', 10.75],
-    ['27. Apr', 7.64],
-  ]);
+  const chartRows = routesData.value.map(route => {
+    const date = new Date(route.created).toLocaleDateString();
+    const distance = parseFloat(route.distance);
+    return [date, distance];
+  });
 
-  const options: google.visualization.LineChartOptions = {
+  data.addRows(chartRows);
+
+  const options = {
     title: 'Dein Fitness-Fortschritt',
-    curveType: 'function',
+    curveType: 'function' as const,
     legend: { position: 'bottom' },
     hAxis: {
       title: 'Datum',
-      slantedText: true, // Wenn die Datenbeschriftungen schräg angezeigt werden sollen
-      slantedTextAngle: 45 // Winkel der Schräge
+      slantedText: true,
+      slantedTextAngle: 45
     },
     vAxis: {
       title: 'Kilometer',
-      minValue: 0, // Minimale Grenze der vertikalen Achse
-      maxValue: 40, // Maximale Grenze der vertikalen Achse, falls gewünscht
+      minValue: 0,
       gridlines: {
-        count: 11, // Dies erzeugt Linien für jeden 5er-Intervall bis 50
+        count: -1,
+        units: {
+          kilometers: { format: ['10'] }
+        }
       },
-      // Optional: Kleinere Gitterlinien für noch feinere Intervalle
-      minorGridlines: {
-        count: 4, // Dies würde zwischen den Hauptgitterlinien kleinere hinzufügen
-      },
-      format: '0', // Optional: Keine Dezimalstellen anzeigen
     },
-    colors: ['#1c91c0'], // Farbe der Linie, passend zu deinem Bild
+    height: 200,
+    colors: ['#1c91c0'],
     pointSize: 5,
-    chartArea: {
-      left: '10%',
-      top: '10%',
-      width: '80%',
-      height: '40%' // Evtl. die Höhe anpassen für eine bessere Darstellung
-    },
-  };
-
+    chartArea: { left: '10%', top: '10%', width: '85%', height: '40%' },
+  } as google.visualization.LineChartOptions;
 
   const chart = new google.visualization.LineChart(chartDiv.value);
   chart.draw(data, options);
 }
+
+onMounted(fetchMaps);
 </script>
 
+
 <style scoped>
+/* Ihr vorhandener Stil plus ggf. zusätzliche Stile */
 .content-center {
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 100px;
 }
 
 .centered-content {
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-}
-
-#chart_div {
-  width: 100%;
-  height: 400px;
-  /* Angepasste Höhe für Gitterlinien */
-}
-
-.centered-content>* {
-  text-align: center;
 }
 
 .centered-container {
@@ -136,42 +133,7 @@ function drawChart() {
 
 #chartDiv {
   width: 100%;
-  height: 200px;
+  height: 300px;
+  /* Höhe des Diagramms anpassen */
 }
-
-/* Star Wars-Theme Farben */
-:root {
-  --ion-color-primary: #000;
-  /* Schwarz für den Hintergrund */
-  --ion-color-secondary: #ffe81f;
-  /* Gold für wichtige Elemente */
-  --ion-color-tertiary: #d0d0d0;
-  /* Grau für Nebenelemente */
-}
-
-ion-title,
-ion-card-content {
-  color: #ffe81f;
-}
-
-p {
-  color: #d0d0d0;
-}
-
-.ion-header-flex {
-  display: flex;
-  justify-content: center;
-  /* Zentriert die Inhalte horizontal */
-  align-items: center;
-  /* Zentriert die Inhalte vertikal */
-  flex-direction: column;
-  /* Stapelt die Kinder vertikal */
-  text-align: center;
-  /* Zentriert den Text der direkten Kinder */
-}
-
-ion-header {
-  --background: #000;
-}
-
 </style>

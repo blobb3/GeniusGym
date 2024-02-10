@@ -1,5 +1,6 @@
 package ch.zhaw.sml.iwi.meng.leantodo.boundary;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.Map;
 import ch.zhaw.sml.iwi.meng.leantodo.repositories.MapRepository;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin
 public class MapEndpoint {
 
+    private static final Logger log = LoggerFactory.getLogger(MapEndpoint.class);
+
     @Autowired
     private MapRepository mapRepository;
 
-    @GetMapping("/api/maps")
+    @GetMapping("/api/routes")
     public ResponseEntity<List<Map>> getAllMaps() {
-        List<Map> maps = mapRepository.findAll();
-        return new ResponseEntity<>(maps, HttpStatus.OK);
+        log.info("Abrufen aller Maps gestartet.");
+        try {
+            List<Map> maps = mapRepository.findAll();
+            log.info("Abrufen aller Maps erfolgreich beendet.");
+            return new ResponseEntity<>(maps, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Fehler beim Abrufen der Maps", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/api/route")
+    public ResponseEntity<Map> saveMap(@RequestBody Map map) {
+        map.setCreated(LocalDate.now());
+        Map savedRoute = mapRepository.save(map);
+        return new ResponseEntity<>(savedRoute, HttpStatus.CREATED);
     }
 
     @PostMapping("/api/maps")
@@ -38,12 +56,4 @@ public class MapEndpoint {
                 })
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-    @PostMapping("/api/route")
-    public ResponseEntity<Map> saveMap(@RequestBody Map map) {
-        Map route = new Map(map.getOrigin(), map.getDestination(), map.getDistance(), map.getDuration());
-        Map savedRoute = mapRepository.save(route);
-        return new ResponseEntity<>(savedRoute, HttpStatus.CREATED);
-    }
-    
 }
