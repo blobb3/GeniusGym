@@ -1,11 +1,15 @@
 <template>
   <ion-page>
     <ion-content class="content-center">
+      <ion-header class="ion-header-flex">
+      <TheFooter />
+      <ion-toolbar>
+        <ion-title class="ion-padding">Dashboard</ion-title>
+        <p class="ion-padding">{{ dailyQuote }}</p>
+      </ion-toolbar>
+    </ion-header>
+    <br>
       <div class="centered-content">
-        <ion-toolbar>
-          <ion-title>Dashboard</ion-title>
-        </ion-toolbar>
-        <p style="margin-bottom: 50px;">{{ dailyQuote }}</p>
         <div class="centered-container">
           <ion-datetime :is-date-enabled="isWeekday"></ion-datetime>
         </div>
@@ -19,6 +23,7 @@
 import { IonPage, IonToolbar, IonTitle, IonContent, IonDatetime } from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
 import { ref, onMounted } from 'vue';
+import TheFooter from '@/components/TheFooter.vue';
 
 const { dailyQuote } = useDailyQuote();
 
@@ -99,7 +104,7 @@ function drawChart() {
 }
 </script>
 
-<style>
+<style scoped>
 .content-center {
   display: flex;
   justify-content: center;
@@ -133,4 +138,40 @@ function drawChart() {
   width: 100%;
   height: 200px;
 }
+
+/* Star Wars-Theme Farben */
+:root {
+  --ion-color-primary: #000;
+  /* Schwarz für den Hintergrund */
+  --ion-color-secondary: #ffe81f;
+  /* Gold für wichtige Elemente */
+  --ion-color-tertiary: #d0d0d0;
+  /* Grau für Nebenelemente */
+}
+
+ion-title,
+ion-card-content {
+  color: #ffe81f;
+}
+
+p {
+  color: #d0d0d0;
+}
+
+.ion-header-flex {
+  display: flex;
+  justify-content: center;
+  /* Zentriert die Inhalte horizontal */
+  align-items: center;
+  /* Zentriert die Inhalte vertikal */
+  flex-direction: column;
+  /* Stapelt die Kinder vertikal */
+  text-align: center;
+  /* Zentriert den Text der direkten Kinder */
+}
+
+ion-header {
+  --background: #000;
+}
+
 </style>
