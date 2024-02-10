@@ -5,7 +5,7 @@
       <ion-toolbar>
         <ion-title class="ion-padding">All Gym-Memories</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="goToAddMemoryPage">
+          <ion-button @click="goToAddMemoryPage" aria-label="Add Memory">
             <ion-icon :icon="addIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -16,12 +16,13 @@
       <ion-list>
         <ion-item v-for="memory in memories" :key="memory.id" @click="viewMemoryDetails(memory.id)">
           {{ memory.title }}
-          <ion-icon :icon="trashIcon" slot="end" @click.stop="deleteMemory(memory.id)"></ion-icon>
+          <ion-icon :icon="trashIcon" slot="end" @click.stop="deleteMemory(memory.id)" aria-label="Delete Memory"></ion-icon>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-page>
 </template>
+
 
 <script setup lang="ts">
 import {
@@ -49,27 +50,31 @@ const memories = ref(JSON.parse(localStorage.getItem('memories') || '[]'));
 const trashIcon = trash;
 
 const viewMemoryDetails = (memoryId: string) => {
+  console.log(`Navigiere zu den Details der Erinnerung mit der ID: ${memoryId}`);
   ionRouter.push(`/tabs/memories/${memoryId}`);
 };
 
 const goToAddMemoryPage = () => {
+  console.log("Navigiere zur Seite zum Hinzufügen einer Erinnerung");
   ionRouter.push('/memories/add');
 };
 
 const deleteMemory = (memoryId: string) => {
+  console.log(`Lösche Erinnerung mit der ID: ${memoryId}`);
   const index = memories.value.findIndex((memory: { id: string; }) => memory.id === memoryId);
   if (index !== -1) {
     memories.value.splice(index, 1);
     localStorage.setItem('memories', JSON.stringify(memories.value));
+  } else {
+    console.log("Keine Erinnerung mit dieser ID gefunden.");
   }
 };
 
 onMounted(() => {
+  console.log("Komponente geladen. Geladene Erinnerungen: ", memories.value);
   memories.value = JSON.parse(localStorage.getItem('memories') || '[]');
 });
 </script>
-
-
 
 <style scoped>
 /* Star Wars-Theme Farben */

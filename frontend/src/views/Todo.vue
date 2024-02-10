@@ -72,7 +72,7 @@ const navigateToAddMemory = () => {
 
 </script>
 
-<style>
+<style scoped>
 /* Star Wars-Theme Anpassungen weiter verwenden */
 :root {
   --ion-color-primary: #000; /* Schwarz */

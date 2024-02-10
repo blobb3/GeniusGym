@@ -117,6 +117,11 @@ p {
   text-align: center; /* Zentriert den Text der direkten Kinder */
 }
 
+ion-header {
+  --background: #000; 
+}
+
+
 /* Basis Animation für Karten */
 @keyframes popIn {
   0% {
