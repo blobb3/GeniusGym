@@ -8,8 +8,16 @@ import java.util.List;
 @Service
 public interface TrainingseinheitService {
     Trainingseinheit addTrainingseinheit(Trainingseinheit trainingseinheit);
+
     Trainingseinheit getTrainingseinheitById(Long id);
+
     List<Trainingseinheit> getAllTrainingseinheiten();
+
     void deleteTrainingseinheit(Long id);
+
     Trainingseinheit updateTrainingseinheit(Trainingseinheit trainingseinheit);
+
+    Integer saveGesamtpunktzahl(Long benutzerId, Integer gesamtpunktzahl);
+
+    Integer getGesamtpunktzahl(Long benutzerId);
 }
