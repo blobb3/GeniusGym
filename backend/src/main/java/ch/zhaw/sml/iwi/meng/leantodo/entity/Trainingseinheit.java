@@ -28,5 +28,6 @@ public class Trainingseinheit {
     private String typ;
     private String beschreibung;
     private Integer dauer; // Dauer in Minuten
+    private Integer punkte; // Punkte für die Übung
 
 }

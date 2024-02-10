@@ -36,10 +36,14 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonButtons, IonBackButton, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
-import { useMethods } from '@/store';
+import {
+    IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonAccordionGroup, IonAccordion,
+    IonItem, IonLabel, IonButtons, IonBackButton, IonButton
+} from '@ionic/vue';
 import { useDailyQuote } from '@/composables/useDailyQuote';
+import { useMethods } from '@/store';
+
 const { dailyQuote } = useDailyQuote();
 
 interface Exercise {
@@ -48,14 +52,51 @@ interface Exercise {
     description: string;
     imageUrl: string;
     completed: boolean;
+    punkte: number; 
 }
 
 // Übungen für das Oberkörpertraining
 const exercises = ref<Exercise[]>([
-    { id: 'pushups', name: 'Liegestütze', description: 'Stärkt Brust, Schultern und Trizeps. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/liegestuetze_muskelaufbau-liegestuetze_klassisch.gif', completed: false },
-    { id: 'pullups', name: 'Klimmzüge', description: 'Zielt auf die Rückenmuskulatur und den Bizeps. 2 Sätze von 8-12 Wiederholungen.', imageUrl: 'https://homeworkouts.org/wp-content/uploads/anim-rear-pull-ups.gif', completed: false },
-    { id: 'shoulderPress', name: 'Schulterdrücken', description: 'Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.', imageUrl: 'https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif', completed: false },
+    {
+        id: 'pushups',
+        name: 'Liegestütze',
+        description: 'Stärkt Brust, Schultern und Trizeps. 2 Sätze von je 10-15 Wiederholungen.',
+        imageUrl: 'https://www.fitundattraktiv.de/wp-content/uploads/2018/02/liegestuetze_muskelaufbau-liegestuetze_klassisch.gif',
+        completed: false,
+        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+    },
+    {
+        id: 'pullups',
+        name: 'Klimmzüge',
+        description: 'Zielt auf die Rückenmuskulatur und den Bizeps. 2 Sätze von 8-12 Wiederholungen.',
+        imageUrl: 'https://homeworkouts.org/wp-content/uploads/anim-rear-pull-ups.gif',
+        completed: false,
+        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+    },
+    {
+        id: 'shoulderPress',
+        name: 'Schulterdrücken',
+        description: 'Kräftigt die Schultermuskulatur. 2 Sätze von je 10-15 Wiederholungen.',
+        imageUrl: 'https://modusx.de/wp-content/uploads/schulterdruecken-kurzhanteln-sitzend.gif',
+        completed: false,
+        punkte: 10 // Füge einen Wert für 'punkte' hinzu
+    },
 ]);
+
+
+const collectedPoints = ref(0);
+
+// Diese Funktion sollte innerhalb des `setup`-Blocks definiert sein.
+const completeExercise = (index: number) => {
+    const exercise = exercises.value[index];
+    if (!exercise.completed) {
+        collectedPoints.value += exercise.punkte; // Punkte zur gesammelten Punktzahl hinzufügen
+        exercise.completed = true;
+    }
+};
+
+
+/* Versuch 1 - Backup-Option
 
 const collectedPoints = ref(0);
 
@@ -67,10 +108,10 @@ const completeExercise = (index: number) => {
         exercises.value[index].completed = true;
         addPointsToOberkoerper(5); // Korrekt für Oberkoerper.vue
     }
-};
-
-
+};  */
 </script>
+
+
 
 <style scoped>
 /* Star Wars-Theme Anpassungen */
